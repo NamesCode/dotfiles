@@ -17,10 +17,13 @@ in {
       # Sets the wallpaper for all outputs
       output."*".bg = "${config.vars.wallpaper} fill";
 
+      # Set fonts
       fonts.names = ["${config.vars.mainFont}"];
 
       # Opens in workspace 1
       defaultWorkspace = "workspace number 1";
+ 
+      # Set theme
       colors = {
         background = "#ffffff00"; # Makes the window background transparent
         focused = {
@@ -53,13 +56,16 @@ in {
         };
       };
 
+      # Window theming
       window = {
         border = 2;
         titlebar = false;
       };
 
+      # Set gap size
       gaps.inner = 3;
 
+      # Set the bar
       bars = [
         {
           command = "${pkgs.waybar}/bin/waybar";
@@ -67,6 +73,7 @@ in {
         }
       ];
 
+      # Define the keybindings
       keybindings = {
         # General binds
         "${modifier}+q" = "kill";
@@ -147,7 +154,10 @@ in {
         "${modifier}+Shift+0" = "move container to workspace number 10";
       };
 
+      # Stop sway from focusing every window you hover
       focus.followMouse = false;
+
+      # Start programs on Sway startup
       startup = [
         # Since we don't use SystemD for Sway, we must exec Swayidle through Sway
         {command = "${pkgs.swayidle}/bin/swayidle timeout 120 'swaylock -f' timeout 240 'systemctl suspend' before-sleep 'swaylock -f' lock 'swaylock -f'";}
@@ -157,6 +167,8 @@ in {
         {command = "foot";}
       ];
     };
+
+    # I got no clue what this does
     wrapperFeatures = {
       gtk = true;
     };

@@ -18,7 +18,7 @@
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
   # Lets the system find fonts when installed through HM
-  fonts.fontconfig.enableProfileFonts = true;
+  fonts.fontconfig.enable = true;
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
