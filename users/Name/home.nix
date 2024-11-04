@@ -32,6 +32,9 @@
     # Better tools
     ripgrep
 
+    # Yubikey stuff
+    yubikey-manager
+
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
     # # environment:
@@ -89,6 +92,9 @@
     
     # Shell
     ./bash.nix
+
+    # GPG
+    ./gpg.nix
 
     # The dotfile lib
     ../../modules/home-manager/lib.nix

@@ -48,6 +48,7 @@
           format-charging = "  {capacity}%";
           format-icons = [" " " " " " " " " "];
           states = {
+            "critical" = 15;
             "low" = 25;
             "medium" = 75;
             "full" = 100;
@@ -171,25 +172,22 @@
         color: #89dceb;
       }
 
-      #battery {
+      #battery.critical {
         border-color: #f38ba8;
         color: #f38ba8;
         animation: blink 0.5s alternate infinite;
       }
       #battery.low {
         border-color: #fab387;
-        color: #f9e2af;
-        animation: none;
+        color: #fab387;
       }
       #battery.medium {
         border-color: #f9e2af;
-        color: #fab387;
-        animation: none;
+        color: #f9e2af;
       }
       #battery.full {
         border-color: #a6e3a1;
         color: #a6e3a1;
-        animation: none;
       }
       #battery.charging {
         border-color: #a6e3a1;

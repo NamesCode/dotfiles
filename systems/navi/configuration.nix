@@ -45,7 +45,10 @@
 
   # Manage Nix itself
   nix = {
+    # Enables flakes
     settings.experimental-features = ["nix-command" "flakes"];
+
+    optimise.automatic = true;
 
     # Manage the garbage collector
     gc = {
@@ -54,6 +57,9 @@
       options = "--delete-older-than 14d";
     };
   };
+ 
+  # Allows NixOS to auto update.
+  system.autoUpgrade.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.Name = {
@@ -62,7 +68,14 @@
     packages = with pkgs; [neofetch firefox];
   };
 
-  security.polkit.enable = true;
+  # Security settings
+  security = {
+    # Desktop security stuff
+    polkit.enable = true;
+
+    # Requires that you use the root password instead of your current users when using sudo
+    sudo.extraConfig = "Defaults rootpw";
+  };
 
   home-manager = {
     users = {
@@ -85,8 +98,16 @@
     mesa.drivers
   ];
 
-  # Run the experimental vulkan driver NOTE: REMOVE IN FUTURE WHEN ITS STABLE
-  hardware.asahi.useExperimentalGPUDriver = true;
+  hardware = {
+    # Run the experimental vulkan driver NOTE: REMOVE IN FUTURE WHEN ITS STABLE
+    asahi.useExperimentalGPUDriver = true;
+
+    # Enable bluetooth support
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
+  };
 
   services = {
     # Allow a keyring for storing sensitive keys.
@@ -106,6 +127,11 @@
 
     # Enable CUPS to print documents.
     printing.enable = true;
+
+    udev.packages = [ pkgs.libu2f-host ];
+
+    # Smart card support
+    pcscd.enable = true;
   };
 
   programs.sway = {
