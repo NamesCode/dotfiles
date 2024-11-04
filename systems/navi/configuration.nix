@@ -128,8 +128,6 @@
     # Enable CUPS to print documents.
     printing.enable = true;
 
-    udev.packages = [ pkgs.libu2f-host ];
-
     # Smart card support
     pcscd.enable = true;
   };

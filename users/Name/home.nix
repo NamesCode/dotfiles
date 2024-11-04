@@ -93,9 +93,6 @@
     # Shell
     ./bash.nix
 
-    # GPG
-    ./gpg.nix
-
     # The dotfile lib
     ../../modules/home-manager/lib.nix
   ];
