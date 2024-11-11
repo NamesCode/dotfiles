@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   # Setup waybar
   programs.waybar = {
     enable = true;
@@ -15,9 +16,21 @@
           "eDP-1"
           "HDMI-A-1"
         ];
-        modules-left = ["sway/workspaces" "sway/mode" "sway/window" "mpd"];
+        modules-left = [
+          "sway/workspaces"
+          "sway/mode"
+          "sway/window"
+          "mpd"
+        ];
         #modules-center = [ "custom/hello-from-waybar" "custom/mymodule#with-css-id" ];
-        modules-right = ["cpu" "privacy" "clock" "wireplumber" "network" "battery"];
+        modules-right = [
+          "cpu"
+          "privacy"
+          "clock"
+          "wireplumber"
+          "network"
+          "battery"
+        ];
 
         "sway/workspaces" = {
           disable-scroll = true;
@@ -46,7 +59,13 @@
         battery = {
           format = "{icon} {capacity}%";
           format-charging = "  {capacity}%";
-          format-icons = [" " " " " " " " " "];
+          format-icons = [
+            " "
+            " "
+            " "
+            " "
+            " "
+          ];
           states = {
             "critical" = 15;
             "low" = 25;
@@ -59,7 +78,10 @@
           format-muted = "  {volume}%";
           format = "{icon} {volume}%";
           on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-          format-icons = [" " " "];
+          format-icons = [
+            " "
+            " "
+          ];
         };
 
         # Example on how to write a custom module

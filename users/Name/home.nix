@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "Name";
@@ -24,9 +25,14 @@
   # environment.
   home.packages = with pkgs; [
     # Install patches dev fonts
-    (pkgs.nerdfonts.override {fonts = ["FiraCode" "JetBrainsMono"];})
+    (pkgs.nerdfonts.override {
+      fonts = [
+        "FiraCode"
+        "JetBrainsMono"
+      ];
+    })
     #(nvame)
-    
+
     # View system resource usage nicely
     htop
 
@@ -92,7 +98,7 @@
     ./waybar.nix
     ./mako.nix
     ./tofi.nix
-    
+
     # Shell
     ./bash.nix
 
@@ -158,16 +164,16 @@
       preset = "gay-men";
       mode = "rgb";
       light_dark = "dark";
-      lightness = 0.60;
+      lightness = 0.6;
       color_align = {
         mode = "horizontal";
-        custom_colors = [];
+        custom_colors = [ ];
         fore_back = null;
       };
       backend = "neofetch";
       args = null;
       distro = null;
-      pride_month_shown = [];
+      pride_month_shown = [ ];
       pride_month_disable = false;
     };
   };

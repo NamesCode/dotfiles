@@ -2,12 +2,14 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   # Modifier key
   modifier = "Mod4";
   # Keyboard backlight device
   keyboard = "kbd_backlight";
-in {
+in
+{
   # Configure Sway
   wayland.windowManager.sway = {
     enable = true;
@@ -18,11 +20,11 @@ in {
       output."*".bg = "${config.vars.wallpaper} fill";
 
       # Set fonts
-      fonts.names = ["${config.vars.mainFont}"];
+      fonts.names = [ "${config.vars.mainFont}" ];
 
       # Opens in workspace 1
       defaultWorkspace = "workspace number 1";
- 
+
       # Set theme
       colors = {
         background = "#ffffff00"; # Makes the window background transparent
@@ -162,11 +164,13 @@ in {
       # Start programs on Sway startup
       startup = [
         # Since we don't use SystemD for Sway, we must exec Swayidle through Sway
-        {command = "${pkgs.swayidle}/bin/swayidle timeout 120 'swaylock -f' timeout 240 'systemctl suspend' before-sleep 'swaylock -f' lock 'swaylock -f'";}
-        {command = "${pkgs.mako}/bin/mako --config ${config.xdg.configHome}/mako/config";}
+        {
+          command = "${pkgs.swayidle}/bin/swayidle timeout 120 'swaylock -f' timeout 240 'systemctl suspend' before-sleep 'swaylock -f' lock 'swaylock -f'";
+        }
+        { command = "${pkgs.mako}/bin/mako --config ${config.xdg.configHome}/mako/config"; }
         # Apps
-        {command = "firefox";}
-        {command = "foot";}
+        { command = "firefox"; }
+        { command = "foot"; }
       ];
     };
 

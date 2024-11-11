@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   # Configure tofi
   programs.tofi = {
     enable = true;

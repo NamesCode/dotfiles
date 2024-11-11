@@ -7,7 +7,8 @@
   pkgs,
   inputs,
   ...
-}: {
+}:
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -47,7 +48,10 @@
   # Manage Nix itself
   nix = {
     # Enables flakes
-    settings.experimental-features = ["nix-command" "flakes"];
+    settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
 
     optimise.automatic = true;
 
@@ -58,15 +62,15 @@
       options = "--delete-older-than 14d";
     };
   };
- 
+
   # Allows NixOS to auto update.
   system.autoUpgrade.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.Name = {
     isNormalUser = true;
-    extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [firefox];
+    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    packages = with pkgs; [ firefox ];
   };
 
   # Security settings
@@ -105,6 +109,11 @@
   hardware = {
     # Run the experimental vulkan driver NOTE: REMOVE IN FUTURE WHEN ITS STABLE
     asahi.useExperimentalGPUDriver = true;
+
+    graphics = {
+      enable = true;
+      enable32Bit = false;
+    };
 
     # Enable bluetooth support
     bluetooth = {
