@@ -36,10 +36,45 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1730785428,
+        "narHash": "sha256-Zwl8YgTVJTEum+L+0zVAWvXAGbWAuXHax3KzuejaDyo=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "4aa36568d413aca0ea84a1684d2d46f55dbabad7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nvame": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1731299143,
+        "narHash": "sha256-B6rhKJPYFwOBFiptCxuj5LQVupRgdBVkYBjc9iIUW5Y=",
+        "owner": "namescode",
+        "repo": "nvame",
+        "rev": "f56e609b1a31b08807d7a17cbf5305307d490c69",
+        "type": "github"
+      },
+      "original": {
+        "owner": "namescode",
+        "repo": "nvame",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "nvame": "nvame"
       }
     }
   },

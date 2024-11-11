@@ -5,6 +5,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }: {
   imports = [
@@ -65,7 +66,7 @@
   users.users.Name = {
     isNormalUser = true;
     extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [neofetch firefox];
+    packages = with pkgs; [firefox];
   };
 
   # Security settings
@@ -96,6 +97,9 @@
     # This is needed for the Asahi Vulkan drivers
     mesa
     mesa.drivers
+
+    # My Neovim flake (bracket to avoid 'with pkgs')
+    (inputs.nvame.packages.${system}.default)
   ];
 
   hardware = {
@@ -151,7 +155,7 @@
   # services.openssh.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 8080 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;

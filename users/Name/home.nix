@@ -25,6 +25,7 @@
   home.packages = with pkgs; [
     # Install patches dev fonts
     (pkgs.nerdfonts.override {fonts = ["FiraCode" "JetBrainsMono"];})
+    #(nvame)
     
     # View system resource usage nicely
     htop
@@ -79,7 +80,7 @@
   # Define variables used across modules
   vars = {
     mainFont = "JetBrains Mono";
-    wallpaper = ../../modules/impure/wallpapers/garfield_wallpaper.png;
+    wallpaper = ../../modules/impure/wallpapers/xenia.png;
   };
 
   # Imports the modules for different configs.
@@ -92,6 +93,9 @@
     
     # Shell
     ./bash.nix
+
+    # Terminal
+    ./foot.nix
 
     # The dotfile lib
     ../../modules/home-manager/lib.nix
@@ -114,13 +118,18 @@
   #  /etc/profiles/per-user/Name/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    EDITOR = "vim";
+    EDITOR = "nvim";
   };
   home.shellAliases = {
-    # Sad times, I dont have my neovim conf. Once again I will steal winstons.
-    "nvim" = "nix run github:nekowinston/neovim.drv -- ";
+    # Since Hyfetch doesn't respect XDG on NixOS for some reason
+    hyfetch = "hyfetch -C ${config.xdg.configHome}/hyfetch.json";
+    vim = "nvim";
   };
 
+  # Run the SSH agent on startup
+  services.ssh-agent.enable = true;
+
+  # Configures git
   programs.git = {
     enable = true;
     userName = "Name";
@@ -128,6 +137,27 @@
 
     extraConfig = {
       init.defaultBranch = "main";
+    };
+  };
+
+  # Makes my fetch ✨ G A Y ✨
+  programs.hyfetch = {
+    enable = true;
+    settings = {
+      preset = "gay-men";
+      mode = "rgb";
+      light_dark = "dark";
+      lightness = 0.60;
+      color_align = {
+        mode = "horizontal";
+        custom_colors = [];
+        fore_back = null;
+      };
+      backend = "neofetch";
+      args = null;
+      distro = null;
+      pride_month_shown = [];
+      pride_month_disable = false;
     };
   };
 

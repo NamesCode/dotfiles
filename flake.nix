@@ -7,11 +7,13 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nvame.url = "github:namescode/nvame";
   };
 
   outputs = {
     self,
     nixpkgs,
+    nvame,
     ...
   } @ inputs: let
     system = "aarch64-linux";
@@ -22,7 +24,7 @@
   in {
     formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
     nixosConfigurations."navi" = nixpkgs.lib.nixosSystem {
-      specialArgs = {inherit system;};
+      specialArgs = { inherit system; inherit inputs; };
       modules = [./systems/navi/configuration.nix inputs.home-manager.nixosModules.home-manager];
     };
   };
