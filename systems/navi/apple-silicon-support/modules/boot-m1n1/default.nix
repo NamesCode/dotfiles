@@ -1,9 +1,5 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: let
+{ config, pkgs, lib, ... }:
+let
   pkgs' = config.hardware.asahi.pkgs;
 
   bootM1n1 = pkgs'.m1n1.override {
@@ -12,7 +8,9 @@
     customLogo = config.boot.m1n1CustomLogo;
   };
 
-  bootUBoot = pkgs'.uboot-asahi.override {m1n1 = bootM1n1;};
+  bootUBoot = pkgs'.uboot-asahi.override {
+    m1n1 = bootM1n1;
+  };
 
   bootFiles = {
     "m1n1/boot.bin" = pkgs.runCommand "boot.bin" {} ''
@@ -31,7 +29,7 @@ in {
     boot.loader.systemd-boot.extraFiles = bootFiles;
 
     # ensure the installer has m1n1 in the image
-    system.extraDependencies = lib.mkForce [bootM1n1 bootUBoot];
+    system.extraDependencies = lib.mkForce [ bootM1n1 bootUBoot ];
     system.build.m1n1 = bootFiles."m1n1/boot.bin";
   };
 
