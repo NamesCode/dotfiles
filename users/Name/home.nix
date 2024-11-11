@@ -32,6 +32,8 @@
 
     # Better tools
     ripgrep
+    fd
+    lsd
 
     # Yubikey stuff
     yubikey-manager
@@ -119,6 +121,8 @@
   #
   home.sessionVariables = {
     EDITOR = "nvim";
+    vim = "nvim";
+    ls = "lsd";
   };
   home.shellAliases = {
     # Since Hyfetch doesn't respect XDG on NixOS for some reason
@@ -138,6 +142,13 @@
     extraConfig = {
       init.defaultBranch = "main";
     };
+  };
+
+  # Sets up Nix-Direnv
+  programs.direnv = {
+    enable = true;
+    enableBashIntegration = true;
+    nix-direnv.enable = true;
   };
 
   # Makes my fetch ✨ G A Y ✨

@@ -57,11 +57,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1731299143,
-        "narHash": "sha256-B6rhKJPYFwOBFiptCxuj5LQVupRgdBVkYBjc9iIUW5Y=",
+        "lastModified": 1731328486,
+        "narHash": "sha256-n7QTqx3xepFVQpRJqQ1tOeUGYacZ47l4rDA/RPzSaiU=",
         "owner": "namescode",
         "repo": "nvame",
-        "rev": "f56e609b1a31b08807d7a17cbf5305307d490c69",
+        "rev": "3a612edbdf372f383036fd244bb1f966a4798a0f",
         "type": "github"
       },
       "original": {

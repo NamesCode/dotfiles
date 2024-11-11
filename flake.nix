@@ -22,7 +22,7 @@
       config = {allowUnfree = true;};
     };
   in {
-    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
+    formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
     nixosConfigurations."navi" = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit system; inherit inputs; };
       modules = [./systems/navi/configuration.nix inputs.home-manager.nixosModules.home-manager];
