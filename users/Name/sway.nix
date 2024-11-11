@@ -94,6 +94,8 @@ in {
         "${modifier}+Alt+Shift+F1" = "exec brightnessctl -d ${keyboard} s 0%";
         "${modifier}+Alt+F2" = "exec brightnessctl -d ${keyboard} s 10+";
         "${modifier}+Alt+Shift+F2" = "exec brightnessctl -d ${keyboard} s 100%";
+        "${modifier}+Ctrl+F1" = "output * dpms off";
+        "${modifier}+Ctrl+F2" = "output * dpms on";
 
         "${modifier}+F10" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
         "${modifier}+F11" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
