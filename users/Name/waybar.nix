@@ -24,8 +24,8 @@
         ];
         #modules-center = [ "custom/hello-from-waybar" "custom/mymodule#with-css-id" ];
         modules-right = [
-          "cpu"
           "privacy"
+          "cpu"
           "clock"
           "wireplumber"
           "network"
