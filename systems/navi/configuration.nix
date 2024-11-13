@@ -5,7 +5,6 @@
   config,
   lib,
   pkgs,
-  inputs,
   ...
 }:
 {
@@ -103,7 +102,7 @@
     mesa.drivers
 
     # My Neovim flake (bracket to avoid 'with pkgs')
-    (inputs.nvame.packages.${system}.default)
+    (config.nvameConfigs.mainConfig)
   ];
 
   hardware = {

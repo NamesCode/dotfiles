@@ -19,16 +19,16 @@
     }@inputs:
     let
       system = "aarch64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        config = {
-          allowUnfree = true;
-        };
-      };
     in
+    # pkgs = import nixpkgs {
+    #   inherit system;
+    #   config = {
+    #     allowUnfree = true;
+    #   };
+    # };
     {
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
-      nixosConfigurations."navi" = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.navi = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit system;
           inherit inputs;
@@ -36,6 +36,7 @@
         modules = [
           ./systems/navi/configuration.nix
           inputs.home-manager.nixosModules.home-manager
+          inputs.nvame.nixosModules.nvame
         ];
       };
     };
