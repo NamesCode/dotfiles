@@ -44,6 +44,9 @@
     # Yubikey stuff
     yubikey-manager
 
+    # Multi-media
+    vlc
+
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
     # # environment:
@@ -88,7 +91,7 @@
   # Define variables used across modules
   vars = {
     mainFont = "JetBrains Mono";
-    wallpaper = ../../modules/impure/wallpapers/xenia.png;
+    wallpaper = ../../modules/impure/wallpapers/shinji-x-kaworu/beach.jpg;
   };
 
   # Imports the modules for different configs.

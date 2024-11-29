@@ -113,17 +113,17 @@
 
       /* Waybar itself */
       window#waybar {
-        background: rgba(30, 30, 46, 0.85);
+        background: rgba(30, 30, 46, 0.98);
       }
 
       tooltip {
-        background: rgba(24, 24, 37, 0.85);
+        background: rgba(24, 24, 37, 0.98);
         border-radius: 3px;
       }
 
       /* CSS for the left side */
       #workspaces button {
-        background: rgba(24, 24, 37, 0.85);
+        background: rgba(24, 24, 37, 0.98);
         padding: 0 5px;
         border-bottom: 1px solid #9399b2;
       }
@@ -167,7 +167,7 @@
 
       /* CSS for the right side */
       #cpu, #clock, #wireplumber, #network, #battery {
-        background: rgba(24, 24, 37, 0.85);
+        background: rgba(24, 24, 37, 0.98);
         padding: 0px 2px;
         border-bottom: 1px solid #cdd6f4;
       }
@@ -194,6 +194,10 @@
         color: #89dceb;
       }
 
+      #battery {
+        border-color: #a6e3a1;
+        color: #a6e3a1;
+      }
       #battery.critical {
         border-color: #f38ba8;
         color: #f38ba8;

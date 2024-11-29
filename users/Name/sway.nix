@@ -106,6 +106,7 @@ in
         # Applications
         "${modifier}+Alt+t" = "exec ${pkgs.foot}/bin/foot";
         "${modifier}+Alt+f" = "exec firefox";
+        "${modifier}+Alt+v" = "exec vlc";
 
         # Window navigation
         "${modifier}+h" = "focus left";
