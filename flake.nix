@@ -19,15 +19,22 @@
     }@inputs:
     let
       system = "aarch64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
     in
-    # pkgs = import nixpkgs {
-    #   inherit system;
-    #   config = {
-    #     allowUnfree = true;
-    #   };
-    # };
     {
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
+
+      devShells.${system}.default = pkgs.mkShell {
+        default = pkgs.mkShell {
+          nativeBuildInputs = with pkgs; [
+            bash-language-server
+          ];
+
+          shellHook = ''echo "Welcome to the bloatation station! :D"'';
+        };
+
+      };
+
       nixosConfigurations.navi = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit system;
@@ -39,5 +46,6 @@
           inputs.nvame.nixosModules.nvame
         ];
       };
+
     };
 }
