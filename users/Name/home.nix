@@ -31,7 +31,6 @@
         "JetBrainsMono"
       ];
     })
-    #(nvame)
 
     # View system resource usage nicely
     htop
@@ -74,16 +73,16 @@
   xdg = {
     enable = true;
 
-    configHome = "${config.home.homeDirectory}/.xdg/etc/";
-    cacheHome = "${config.home.homeDirectory}/.xdg/var/cache/";
-    dataHome = "${config.home.homeDirectory}/.xdg/usr/share/";
-    stateHome = "${config.home.homeDirectory}/.xdg/var/lib/";
+    configHome = "${config.home.homeDirectory}/.xdg/etc";
+    cacheHome = "${config.home.homeDirectory}/.xdg/var/cache";
+    dataHome = "${config.home.homeDirectory}/.xdg/usr/share";
+    stateHome = "${config.home.homeDirectory}/.xdg/var/lib";
 
     dataFile = {
-      "scripts/screenshot.sh" = {
-        enable = true;
-        executable = true;
-        source = ../../modules/impure/scripts/screenshot.sh;
+      # Copies all my scripts to the xdg scripts folder. NOTE: MAKE SURE TO `chmod +x` THE SCRIPT FIRST!!
+      "scripts" = {
+        recursive = true;
+        source = ../../modules/impure/scripts;
       };
     };
   };
@@ -128,15 +127,21 @@
   #
   #  /etc/profiles/per-user/Name/etc/profile.d/hm-session-vars.sh
   #
+
+  # Sets environment variables for my user
   home.sessionVariables = {
     EDITOR = "nvim";
-    vim = "nvim";
-    ls = "lsd";
   };
+  # Adds directorys to path
+  home.sessionPath = [
+    "${config.xdg.dataHome}/scripts"
+  ];
+  # Sets up shell aliases
   home.shellAliases = {
     # Since Hyfetch doesn't respect XDG on NixOS for some reason
     hyfetch = "hyfetch -C ${config.xdg.configHome}/hyfetch.json";
     vim = "nvim";
+    ls = "lsd";
   };
 
   # Run the SSH agent on startup
