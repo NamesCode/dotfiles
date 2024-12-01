@@ -78,6 +78,23 @@
     dataHome = "${config.home.homeDirectory}/.xdg/usr/share";
     stateHome = "${config.home.homeDirectory}/.xdg/var/lib";
 
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+
+      desktop = "${config.home.homeDirectory}";
+      download = "${config.home.homeDirectory}/downloads";
+      documents = "${config.home.homeDirectory}/documents";
+      templates = "${config.home.homeDirectory}/documents/templates";
+      music = "${config.home.homeDirectory}/media/music";
+      pictures = "${config.home.homeDirectory}/media/images";
+      videos = "${config.home.homeDirectory}/media/videos";
+      publicShare = "${config.home.homeDirectory}/public";
+      extraConfig = {
+        XDG_CODE_DIR = "${config.home.homeDirectory}/projects";
+      };
+    };
+
     dataFile = {
       # Copies all my scripts to the xdg scripts folder. NOTE: MAKE SURE TO `chmod +x` THE SCRIPT FIRST!!
       "scripts" = {
@@ -128,6 +145,7 @@
   #  /etc/profiles/per-user/Name/etc/profile.d/hm-session-vars.sh
   #
 
+  # NOTE: THESE OPTIONS REQUIRE A REBOOT TO TAKE AFFECT
   # Sets environment variables for my user
   home.sessionVariables = {
     EDITOR = "nvim";
