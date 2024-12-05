@@ -124,6 +124,9 @@
     # Terminal
     ./foot.nix
 
+    # Dev toolings
+    ./direnv.nix
+
     # The dotfile lib
     ../../modules/home-manager/lib.nix
   ];
@@ -174,13 +177,6 @@
     extraConfig = {
       init.defaultBranch = "main";
     };
-  };
-
-  # Sets up Nix-Direnv
-  programs.direnv = {
-    enable = true;
-    enableBashIntegration = true;
-    nix-direnv.enable = true;
   };
 
   # Makes my fetch ✨ G A Y ✨
