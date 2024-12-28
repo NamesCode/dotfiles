@@ -16,7 +16,7 @@
       commit.gpgsign = true;
       gpg.format = "ssh";
       gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
-      user.signingkey = "~/.ssh/git.pub";
+      user.signingkey = "~/.ssh/general.pub";
 
       # Rebase on every pull
       pull.rebase = true;
