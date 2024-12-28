@@ -127,6 +127,7 @@
 
     # Dev toolings
     ./direnv.nix
+    ./git.nix
 
     # The dotfile lib
     ../../modules/home-manager/lib.nix
