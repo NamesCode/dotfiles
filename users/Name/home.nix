@@ -24,13 +24,9 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    # Install patches dev fonts
-    (pkgs.nerdfonts.override {
-      fonts = [
-        "FiraCode"
-        "JetBrainsMono"
-      ];
-    })
+    # Install nerd-fonts
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
 
     # View system resource usage nicely
     htop
@@ -45,6 +41,10 @@
 
     # Multi-media
     vlc
+    mplayer
+
+    # Connect to android devices
+    android-tools
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -107,7 +107,8 @@
   # Define variables used across modules
   vars = {
     mainFont = "JetBrains Mono";
-    wallpaper = ../../modules/impure/wallpapers/shinji-x-kaworu/beach.jpg;
+    # wallpaper = ../../modules/impure/wallpapers/shinji-x-kaworu/beach.jpg;
+    wallpaper = ../../modules/impure/wallpapers/garfield_wallpaper.png;
   };
 
   # Imports the modules for different configs.
@@ -167,17 +168,6 @@
 
   # Run the SSH agent on startup
   services.ssh-agent.enable = true;
-
-  # Configures git
-  programs.git = {
-    enable = true;
-    userName = "Name";
-    userEmail = "lasagna@garfunkles.space";
-
-    extraConfig = {
-      init.defaultBranch = "main";
-    };
-  };
 
   # Makes my fetch ✨ G A Y ✨
   programs.hyfetch = {
