@@ -12,5 +12,9 @@
     historyFileSize = 100000;
     historyControl = [ "erasedups" ];
     profileExtra = "echo 'hai haiii haiiiiii~ <3'";
+    bashrcExtra = ''
+      # Sets Vi mode on the shell
+      set -o vi
+    '';
   };
 }
