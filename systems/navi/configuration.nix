@@ -26,9 +26,14 @@
   ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = false; # DO NOT CHANGE! uBoot manages this.
+  boot = {
+    # NOTE: Whilst I want to switch to ZFS, it requires me to reinstall Asahi NixOS
+    # This is something I cannot be arsed to do at the moment
+    # supportedFilesystems = [ "zfs" ];
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = false; # DO NOT CHANGE! uBoot manages this.
+    };
   };
 
   # Set your time zone.
@@ -48,6 +53,7 @@
 
   networking = {
     hostName = "navi";
+    hostId = "fa2ae1ae";
 
     wireless.iwd = {
       enable = true;
@@ -114,6 +120,9 @@
     # This is needed for the Asahi Vulkan drivers
     mesa
     mesa.drivers
+
+    # ZFS userspace tools
+    # zfs
 
     # My Neovim flake (bracket to avoid 'with pkgs')
     (config.nvameConfigs.mainConfig)
