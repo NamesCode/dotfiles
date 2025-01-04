@@ -11,15 +11,14 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./apple-silicon-support
+    ../../modules/apple-silicon-support
 
     # NOTE: ALVR currently doesnt support ARM, switch to it when it does.
 
     # Gaming
 
     # ## VR
-    ../../modules/nixos/monado.nix
-
+    # ../../modules/nixos/monado.nix
     # WARN: Steam currently does not run on ARM
     # ## Stores
     # ../../modules/nixos/steam.nix

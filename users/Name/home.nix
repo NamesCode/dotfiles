@@ -30,6 +30,7 @@
 
     # View system resource usage nicely
     htop
+    ncdu
 
     # Better tools
     ripgrep

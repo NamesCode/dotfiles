@@ -4,7 +4,21 @@ A real mess but y'know.
 
 ## Installation
 
-No clue, gotta fill in l8r.
+### Asahi Linux
+
+Heyo all you lovely Asahi users!
+
+To use and install my config you must follow [tpwrules installation guide](https://github.com/tpwrules/nixos-apple-silicon/blob/main/docs/uefi-standalone.md)
+but you must **NOT** use the ISO provided by them.
+
+Instead, you will need to use the ISO that I provide.
+
+Why is that you may be asking? tpwrules ISO *doesn't* support OpenZFS as it is an out of tree Linux module,
+and this is completely understandable.
+This is however an issue for this particular config as we want to use ZFS as our primary filesystem.
+
+If you do not trust my prebuilt ISO, feel free to compile it yourself by running:
+`[ISO COMPILE COMMAND HERE]`
 
 ## Usage
 
@@ -24,4 +38,7 @@ So far we have:
 - navi [ My main system ]
 - coplandos [ macOS / nix-darwin systems ]
 - lain [ home-manager systems ]
-- the-wired [ Server ]
+- magi [ Servers (up to 3 only) ]
+    - casper [ Intermediate ]
+    - balthasar [ Most powerful server ]
+    - melchior [ Least powerful server ]

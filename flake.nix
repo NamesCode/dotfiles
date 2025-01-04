@@ -22,6 +22,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in
     {
+      # Dev env stuff
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
 
       devShells.${system}.default = pkgs.mkShell {
@@ -32,9 +33,9 @@
 
           shellHook = ''echo "Welcome to the bloatation station! :D"'';
         };
-
       };
 
+      # System configs
       nixosConfigurations.navi = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit system;
@@ -47,5 +48,26 @@
         ];
       };
 
+      # ISO installer configs
+      nixosConfigurations.asahi-zfs = nixpkgs.lib.nixosSystem {
+        inherit system;
+        pkgs = import inputs.nixpkgs {
+          crossSystem.system = "aarch64-linux";
+          localSystem.system = system;
+          overlays = [
+            (import ./modules/apple-silicon-support/packages/overlay.nix)
+          ];
+        };
+
+        specialArgs = {
+          modulesPath = inputs.nixpkgs + "/nixos/modules";
+        };
+
+        modules = [
+          ./installers/asahi-zfs.nix
+          ./modules/apple-silicon-support
+          { hardware.asahi.pkgsSystem = system; }
+        ];
+      };
     };
 }
