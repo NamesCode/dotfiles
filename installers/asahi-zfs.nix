@@ -16,6 +16,7 @@
 # included in all copies or substantial portions of the Software.
 
 {
+  inputs,
   config,
   pkgs,
   lib,
@@ -100,6 +101,9 @@
     curl
     wget
     git
+
+    # Text editor
+    (inputs.nvame.packages.${system}.mainConfig)
   ];
 
   # save space and compilation time. might revise?

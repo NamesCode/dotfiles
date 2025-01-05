@@ -69,6 +69,7 @@
         system:
         nixpkgs.lib.nixosSystem {
           inherit system;
+
           pkgs = import inputs.nixpkgs {
             crossSystem.system = "aarch64-linux";
             localSystem.system = system;
@@ -78,6 +79,7 @@
           };
 
           specialArgs = {
+            inherit inputs;
             modulesPath = inputs.nixpkgs + "/nixos/modules";
           };
 
