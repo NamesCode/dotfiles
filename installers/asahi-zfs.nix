@@ -79,8 +79,11 @@
 
   isoImage.squashfsCompression = "zstd -Xcompression-level 6";
 
-  # Enable support for the ZFS filesystem
+  ## Enable support for the ZFS filesystem
+  # Add ZFS kernel module
   boot.supportedFilesystems = [ "zfs" ];
+  # Set hostId for ZFS to build
+  networking.hostId = "32f2b8c5";
 
   environment.systemPackages = with pkgs; [
     # File system tools

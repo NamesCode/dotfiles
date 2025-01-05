@@ -18,56 +18,75 @@
       ...
     }@inputs:
     let
-      system = "aarch64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      forAllSystems = nixpkgs.lib.genAttrs [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
     in
     {
       # Dev env stuff
-      formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
 
-      devShells.${system}.default = pkgs.mkShell {
-        default = pkgs.mkShell {
-          nativeBuildInputs = with pkgs; [
-            bash-language-server
-          ];
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          default = pkgs.mkShell {
+            default = pkgs.mkShell {
+              nativeBuildInputs = with pkgs; [
+                bash-language-server
+              ];
 
-          shellHook = ''echo "Welcome to the bloatation station! :D"'';
-        };
-      };
+              shellHook = ''echo "Welcome to the bloatation station! :D"'';
+            };
+          };
+        }
+      );
 
       # System configs
-      nixosConfigurations.navi = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit system;
-          inherit inputs;
-        };
-        modules = [
-          ./systems/navi/configuration.nix
-          inputs.home-manager.nixosModules.home-manager
-          inputs.nvame.nixosModules.nvame
-        ];
-      };
-
-      # ISO installer configs
-      nixosConfigurations.asahi-zfs = nixpkgs.lib.nixosSystem {
-        inherit system;
-        pkgs = import inputs.nixpkgs {
-          crossSystem.system = "aarch64-linux";
-          localSystem.system = system;
-          overlays = [
-            (import ./modules/apple-silicon-support/packages/overlay.nix)
+      nixosConfigurations.navi =
+        let
+          system = "aarch64-linux";
+        in
+        nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit system;
+            inherit inputs;
+          };
+          modules = [
+            ./systems/navi/configuration.nix
+            inputs.home-manager.nixosModules.home-manager
+            inputs.nvame.nixosModules.nvame
           ];
         };
 
-        specialArgs = {
-          modulesPath = inputs.nixpkgs + "/nixos/modules";
-        };
+      # ISO installer configs
+      nixosConfigurations.asahi-zfs = forAllSystems (
+        system:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          pkgs = import inputs.nixpkgs {
+            crossSystem.system = "aarch64-linux";
+            localSystem.system = system;
+            overlays = [
+              (import ./modules/apple-silicon-support/packages/overlay.nix)
+            ];
+          };
 
-        modules = [
-          ./installers/asahi-zfs.nix
-          ./modules/apple-silicon-support
-          { hardware.asahi.pkgsSystem = system; }
-        ];
-      };
+          specialArgs = {
+            modulesPath = inputs.nixpkgs + "/nixos/modules";
+          };
+
+          modules = [
+            ./installers/asahi-zfs.nix
+            ./modules/apple-silicon-support
+            { hardware.asahi.pkgsSystem = system; }
+          ];
+        }
+      );
     };
 }
