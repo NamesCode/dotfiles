@@ -65,11 +65,12 @@
         };
 
       # ISO installer configs
-      nixosConfigurations.asahi-zfs = forAllSystems (
-        system:
+      asahi-zfs-iso = self.nixosConfigurations.asahi-zfs.config.system.build.isoImage;
+      nixosConfigurations.asahi-zfs =
+        let
+          system = "aarch64-linux";
+        in
         nixpkgs.lib.nixosSystem {
-          inherit system;
-
           pkgs = import inputs.nixpkgs {
             crossSystem.system = "aarch64-linux";
             localSystem.system = system;
@@ -88,7 +89,6 @@
             ./modules/apple-silicon-support
             { hardware.asahi.pkgsSystem = system; }
           ];
-        }
-      );
+        };
     };
 }

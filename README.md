@@ -18,7 +18,7 @@ and this is completely understandable.
 This is however an issue for this particular config as we want to use ZFS as our primary filesystem.
 
 If you do not trust my prebuilt ISO, feel free to compile it yourself by running:
-`[ISO COMPILE COMMAND HERE]`
+`nix build .#asahi-zfs-iso`
 
 ## Usage
 
