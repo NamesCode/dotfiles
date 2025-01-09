@@ -18,34 +18,28 @@
       ...
     }@inputs:
     let
-      forAllSystems = nixpkgs.lib.genAttrs [
-        "x86_64-linux"
-        "aarch64-linux"
-        "x86_64-darwin"
-        "aarch64-darwin"
-      ];
+      forAllSystems =
+        function:
+        nixpkgs.lib.genAttrs [
+          "x86_64-linux"
+          "aarch64-linux"
+          "x86_64-darwin"
+          "aarch64-darwin"
+        ] (system: function nixpkgs.legacyPackages.${system});
     in
     {
       # Dev env stuff
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
+      formatter = forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
 
-      devShells = forAllSystems (
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        {
-          default = pkgs.mkShell {
-            default = pkgs.mkShell {
-              nativeBuildInputs = with pkgs; [
-                bash-language-server
-              ];
+      devShells = forAllSystems (pkgs: {
+        default = pkgs.mkShell {
+          nativeBuildInputs = with pkgs; [
+            bash-language-server
+          ];
 
-              shellHook = ''echo "Welcome to the bloatation station! :D"'';
-            };
-          };
-        }
-      );
+          shellHook = ''echo "Welcome to the bloatation station!"'';
+        };
+      });
 
       # System configs
       nixosConfigurations.navi =
@@ -71,14 +65,6 @@
           system = "aarch64-linux";
         in
         nixpkgs.lib.nixosSystem {
-          pkgs = import inputs.nixpkgs {
-            crossSystem.system = "aarch64-linux";
-            localSystem.system = system;
-            overlays = [
-              (import ./modules/apple-silicon-support/packages/overlay.nix)
-            ];
-          };
-
           specialArgs = {
             inherit inputs;
             modulesPath = inputs.nixpkgs + "/nixos/modules";
@@ -88,6 +74,17 @@
             ./installers/asahi-zfs.nix
             ./modules/apple-silicon-support
             { hardware.asahi.pkgsSystem = system; }
+
+            {
+              nixpkgs = {
+                # WARN: Do NOT change the crossSystem
+                crossSystem.system = "aarch64-linux";
+                localSystem.system = system;
+                overlays = [
+                  (import ./modules/apple-silicon-support/packages/overlay.nix)
+                ];
+              };
+            }
           ];
         };
     };
