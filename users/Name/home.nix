@@ -92,7 +92,7 @@
       videos = "${config.home.homeDirectory}/media/videos";
       publicShare = "${config.home.homeDirectory}/public";
       extraConfig = {
-        XDG_CODE_DIR = "${config.home.homeDirectory}/projects";
+        XDG_CODE_DIR = "${config.home.homeDirectory}/documents/code";
       };
     };
 
@@ -166,6 +166,8 @@
     hyfetch = "hyfetch -C ${config.xdg.configHome}/hyfetch.json";
     vim = "nvim";
     ls = "lsd";
+    code = "cd $XDG_CODE_DIR && ls";
+    dotfiles = "cd $XDG_CODE_DIR/dotfiles && $EDITOR";
   };
 
   # Run the SSH agent on startup
