@@ -2,7 +2,7 @@
 
 MUSIC_DIR=${XDG_MUSIC_DIR:-$(pwd)}
 
-mkdir -p MUSIC_DIR
+mkdir -p "$MUSIC_DIR"
 
 printf "Couldn't find the album, huh? What's the URL of the music video?: "
 read -r URL
