@@ -2,6 +2,8 @@
 
 A real mess but y'know.
 
+![A screenshot of my current Navi config](./preview.jpeg) 
+
 ## Installation
 
 ### Asahi Linux
