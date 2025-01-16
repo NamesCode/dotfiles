@@ -17,7 +17,10 @@ in
 
     config = {
       # Sets the wallpaper for all outputs
-      output."*".bg = "${config.vars.wallpaper} fill";
+      output."*" = {
+        mode = "2560x1080";
+        bg = "${config.vars.wallpaper} fill";
+      };
 
       # Set fonts
       fonts.names = [ "${config.vars.mainFont}" ];

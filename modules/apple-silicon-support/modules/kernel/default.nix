@@ -65,10 +65,12 @@
       # nice insurance against f***ing up the kernel so much, the Mac no longer boots
       # (NixOS generations are another wonderful insurance policy, obvs)
       "boot.shell_on_fail"
+
       # most folks don't need these console specifiers
       # if you're doing kernel driver development, uncomment them
       # "console=ttySAC0,115200n8"
       # "console=tty0"
+
       # Apple's SSDs are slow (~dozens of ms) at processing flush requests which
       # slows down programs that make a lot of fsync calls. This parameter sets
       # a delay in ms before actually flushing so that such requests can be
@@ -77,6 +79,10 @@
       # UNBOUNDED data corruption in case of power loss!!!! Don't even think
       # about it on desktops!!
       "nvme_apple.flush_interval=0"
+
+      # Allows us to use the screen next to the notch
+      "apple-dcp.show_notch=1"
+
       # make boot mostly silent, not because we don't appreciate the useful
       # information (we do), but because spew slows down boot
       "quiet"
