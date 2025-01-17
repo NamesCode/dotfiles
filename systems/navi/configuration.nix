@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 {
-  config,
+inputs,
   lib,
   pkgs,
   ...
@@ -124,7 +124,7 @@
     # zfs
 
     # My Neovim flake (bracket to avoid 'with pkgs')
-    (config.nvameConfigs.mainConfig)
+    (inputs.nvame.packages.${system}.mainConfig)
   ];
 
   hardware = {

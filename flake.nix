@@ -48,13 +48,12 @@
         in
         nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit system;
             inherit inputs;
           };
           modules = [
             ./systems/navi/configuration.nix
             inputs.home-manager.nixosModules.home-manager
-            inputs.nvame.nixosModules.nvame
+            { nixpkgs.hostPlatform = system; }
           ];
         };
 
@@ -74,6 +73,7 @@
             ./installers/asahi-zfs.nix
             ./modules/apple-silicon-support
             { hardware.asahi.pkgsSystem = system; }
+            { nixpkgs.hostPlatform = system; }
 
             {
               nixpkgs = {
