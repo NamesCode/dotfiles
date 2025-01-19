@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 {
-inputs,
+  inputs,
   lib,
   pkgs,
   ...
@@ -33,6 +33,9 @@ inputs,
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = false; # DO NOT CHANGE! uBoot manages this.
     };
+
+    # Use tmpfs on /tmp
+    tmp.useTmpfs = true;
   };
 
   # Set your time zone.
@@ -63,11 +66,18 @@ inputs,
   # Manage Nix itself
   nix = {
     # Enables flakes
-    settings.experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
+    settings = {
+      # Sets this to the correct location as /tmp is a tmpfs now
+      build-dir = "/var/tmp";
 
+      # Lets us use the better Nix cli and flakes as god intended
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+    };
+
+    # Optimise the Nix store automagically
     optimise.automatic = true;
 
     # Manage the garbage collector

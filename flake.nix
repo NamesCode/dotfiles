@@ -73,7 +73,6 @@
             ./installers/asahi-zfs.nix
             ./modules/apple-silicon-support
             { hardware.asahi.pkgsSystem = system; }
-            { nixpkgs.hostPlatform = system; }
 
             {
               nixpkgs = {
