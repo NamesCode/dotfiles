@@ -57,6 +57,21 @@
           ];
         };
 
+      # Servers
+      nixosConfigurations.melchior =
+        let
+          system = "x86_64-linux";
+        in
+        nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+          };
+          modules = [
+            ./systems/magi/melchior/configuration.nix
+            { nixpkgs.hostPlatform = system; }
+          ];
+        };
+
       # ISO installer configs
       asahi-zfs-iso = self.nixosConfigurations.asahi-zfs.config.system.build.isoImage;
       nixosConfigurations.asahi-zfs =

@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 {
@@ -20,6 +21,10 @@
       "wheel"
       "allowed-ssh"
       "allowed-nix"
+    ];
+
+    packages = with pkgs; [
+      (inputs.nvame.packages.${system}.default)
     ];
 
     openssh.authorizedKeys.keys = [
