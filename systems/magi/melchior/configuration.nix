@@ -58,7 +58,9 @@
         "allowed-nix"
       ];
 
-      # openssh.authorizedKeys.keys = [ "key" ];
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOJG+RdpIX6sblTrd6c9oxus+/LvupgDVcybtLBpu99d niko123we@Niko"
+      ];
     };
   };
 
