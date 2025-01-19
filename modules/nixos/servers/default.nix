@@ -15,21 +15,32 @@
   ];
 
   # Users
-  users.users.Name = {
-    isNormalUser = true;
-    extraGroups = [
-      "wheel"
-      "allowed-ssh"
-      "allowed-nix"
-    ];
+  users = {
+    mutableUsers = true;
 
-    packages = with pkgs; [
-      (inputs.nvame.packages.${system}.default)
-    ];
+    # Defines users
+    users.Name = {
+      isNormalUser = true;
+      extraGroups = [
+        "wheel"
+        "allowed-ssh"
+        "allowed-nix"
+      ];
 
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAy6DQPAN9Qo6k0VpD10kdV+fuHqofVKh/D4U2GFyXF7 Name@navi"
-    ];
+      packages = with pkgs; [
+        (inputs.nvame.packages.${system}.default)
+      ];
+
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAy6DQPAN9Qo6k0VpD10kdV+fuHqofVKh/D4U2GFyXF7 Name@navi"
+      ];
+    };
+
+    # Defines groups
+    groups = {
+      allowed-ssh = { };
+      allowed-nix = { };
+    };
   };
 
   # Setup environment packages
