@@ -87,7 +87,8 @@
           modules = [
             ./installers/asahi-zfs.nix
             ./modules/apple-silicon-support
-            { hardware.asahi.pkgsSystem = system; }
+            # WARN: Do NOT change the pkgsSystem
+            { hardware.asahi.pkgsSystem = "aarch64-linux"; }
 
             {
               nixpkgs = {

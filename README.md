@@ -10,10 +10,13 @@ A real mess but y'know.
 
 Heyo all you lovely Asahi users!
 
+> [!WARNING]  
+> I have not actually checked this, this was based of a quick lookover of the code. If its enabled by the iso-minimal module then this is entirely BS.
+
 To use and install my config you must follow [tpwrules installation guide](https://github.com/tpwrules/nixos-apple-silicon/blob/main/docs/uefi-standalone.md)
 but you must **NOT** use the ISO provided by them.
 
-Instead, you will need to use the ISO that I provide.
+Instead, you will need to use the ISO that [I provide](https://github.com/NamesCode/dotfiles/releases/tag/asahi-zfs-iso_v1.0.0).
 
 Why is that you may be asking? tpwrules ISO *doesn't* support OpenZFS as it is an out of tree Linux module,
 and this is completely understandable.
@@ -21,6 +24,9 @@ This is however an issue for this particular config as we want to use ZFS as our
 
 If you do not trust my prebuilt ISO, feel free to compile it yourself by running:
 `nix build .#asahi-zfs-iso`
+
+> [!NOTE]
+> You will need to set `boot.binfmt.emulatedSystems = [ "aarch64-linux" ];` if compiling on x86_64-linux. Otherwise, get rid of the Nvame package.
 
 ## Usage
 

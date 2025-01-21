@@ -65,7 +65,7 @@
 
   # Manage Nix itself
   nix = {
-    # Enables flakes
+    # Lets us tune settings
     settings = {
       # Sets this to the correct location as /tmp is a tmpfs now
       build-dir = "/var/tmp";
