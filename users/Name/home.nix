@@ -144,8 +144,7 @@ in
     #./alacritty.nix
 
     # Shell
-    ./bash.nix
-    # ./zsh.nix
+    ./zsh.nix
 
     # Dev toolings
     ../../modules/home-manager/direnv.nix

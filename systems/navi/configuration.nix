@@ -98,6 +98,7 @@
   users.users.Name = {
     isNormalUser = true;
     home = "/home/Name";
+    shell = pkgs.zsh;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [ firefox ];
   };
