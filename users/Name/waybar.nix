@@ -3,10 +3,13 @@
   pkgs,
   ...
 }:
+let
+  inherit (pkgs.stdenv.hostPlatform) isLinux;
+in
 {
   # Setup waybar
   programs.waybar = {
-    enable = true;
+    enable = isLinux;
     settings = {
       # Check https://github.com/Alexays/Waybar/wiki/Configuration for details ^^
       mainBar = {

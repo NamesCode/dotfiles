@@ -3,10 +3,13 @@
   pkgs,
   ...
 }:
+let
+  inherit (pkgs.stdenv.hostPlatform) isLinux;
+in
 {
   # Configure mako
   services.mako = {
-    enable = true;
+    enable = isLinux;
     width = 350;
     textColor = "#cdd6f4";
     borderColor = "#f38ba8";
@@ -15,6 +18,6 @@
     progressColor = "#313244";
     layer = "overlay";
     sort = "+priority";
-    font = "${config.vars.mainFont}";
+    font = "${config.theming.mainFont}";
   };
 }

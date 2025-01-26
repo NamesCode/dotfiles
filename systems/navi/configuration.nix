@@ -97,6 +97,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.Name = {
     isNormalUser = true;
+    home = "/home/Name";
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [ firefox ];
   };
@@ -122,7 +123,6 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # So I dont have to use Nano
     brightnessctl # Screen brightness
     git # Git is essentially a system wide tool nowadays
 

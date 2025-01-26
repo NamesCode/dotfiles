@@ -68,13 +68,14 @@
     [
       "swrast" # software renderer (aka Lavapipe)
     ]
-    ++ lib.optionals
-      (stdenv.hostPlatform.isAarch -> lib.versionAtLeast stdenv.hostPlatform.parsed.cpu.version "6")
-      [
-        # QEMU virtualized GPU (aka VirGL)
-        # Requires ATOMIC_INT_LOCK_FREE == 2.
-        "virtio"
-      ]
+    ++
+      lib.optionals
+        (stdenv.hostPlatform.isAarch -> lib.versionAtLeast stdenv.hostPlatform.parsed.cpu.version "6")
+        [
+          # QEMU virtualized GPU (aka VirGL)
+          # Requires ATOMIC_INT_LOCK_FREE == 2.
+          "virtio"
+        ]
     ++ lib.optionals stdenv.hostPlatform.isAarch64 [
       "panfrost" # ARM Mali Midgard and up (T/G series)
     ],

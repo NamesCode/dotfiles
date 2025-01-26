@@ -3,10 +3,13 @@
   pkgs,
   ...
 }:
+let
+  inherit (pkgs.stdenv.hostPlatform) isLinux;
+in
 {
   # Configure tofi
   programs.tofi = {
-    enable = true;
+    enable = isLinux;
     settings = {
       # Fullscreen theme
       width = "100%";
@@ -17,7 +20,7 @@
       padding-top = "35%";
       result-spacing = 25;
       num-results = 5;
-      font = "${config.vars.mainFont}";
+      font = "${config.theming.mainFont}";
 
       # Catppuccin Mocha
       text-color = "#7f849c";

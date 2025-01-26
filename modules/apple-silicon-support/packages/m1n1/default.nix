@@ -43,14 +43,20 @@ stdenv.mkDerivation rec {
     fetchSubmodules = true;
   };
 
-  makeFlags = [
-    "ARCH=${stdenv.cc.targetPrefix}"
-  ] ++ lib.optional isRelease "RELEASE=1" ++ lib.optional withChainloading "CHAINLOADING=1";
+  makeFlags =
+    [
+      "ARCH=${stdenv.cc.targetPrefix}"
+    ]
+    ++ lib.optional isRelease "RELEASE=1"
+    ++ lib.optional withChainloading "CHAINLOADING=1";
 
-  nativeBuildInputs = [
-    dtc
-    buildPackages.gcc
-  ] ++ lib.optional withChainloading rustenv ++ lib.optional (customLogo != null) imagemagick;
+  nativeBuildInputs =
+    [
+      dtc
+      buildPackages.gcc
+    ]
+    ++ lib.optional withChainloading rustenv
+    ++ lib.optional (customLogo != null) imagemagick;
 
   postPatch = ''
     substituteInPlace proxyclient/m1n1/asm.py \

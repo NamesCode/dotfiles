@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }:
 let
@@ -8,22 +9,24 @@ let
   modifier = "Mod4";
   # Keyboard backlight device
   keyboard = "kbd_backlight";
+
+  isSway = (config.windowManager == "sway");
 in
 {
   # Configure Sway
   wayland.windowManager.sway = {
-    enable = true;
+    enable = isSway;
     package = null;
 
     config = {
       # Sets the wallpaper for all outputs
       output."*" = {
         mode = "2560x1080";
-        bg = "${config.vars.wallpaper} fill";
+        bg = "${config.theming.wallpaper} fill";
       };
 
       # Set fonts
-      fonts.names = [ "${config.vars.mainFont}" ];
+      fonts.names = [ "${config.theming.mainFont}" ];
 
       # Opens in workspace 1
       defaultWorkspace = "workspace number 1";
@@ -189,12 +192,12 @@ in
 
   # Configure swaylock
   programs.swaylock = {
-    enable = true;
+    enable = isSway;
     settings = {
       color = "#1e1e2e";
-      image = "${config.vars.wallpaper}";
+      image = "${config.theming.wallpaper}";
       scaling = "fill";
-      font = "${config.vars.mainFont}";
+      font = "${config.theming.mainFont}";
       font-size = 35;
       inside-color = "#1e1e2ebb";
       inside-clear-color = "#1e1e2ebb";
@@ -223,15 +226,15 @@ in
     };
   };
 
-  home.packages = with pkgs; [
+  home.packages = lib.optionals isSway [
     # Screenshots
-    grim
-    slurp
+    pkgs.grim
+    pkgs.slurp
 
     # Clipboard
-    wl-clipboard
+    pkgs.wl-clipboard
 
     # Handle idling
-    swayidle
+    pkgs.swayidle
   ];
 }

@@ -7,6 +7,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-darwin.url = "github:LnL7/nix-darwin/master";
     nvame.url = "github:namescode/nvame";
   };
 
@@ -15,6 +16,7 @@
       self,
       nixpkgs,
       nvame,
+      nix-darwin,
       ...
     }@inputs:
     let
@@ -42,6 +44,8 @@
       });
 
       # System configs
+
+      ## Personal computers
       nixosConfigurations.navi =
         let
           system = "aarch64-linux";
@@ -57,7 +61,22 @@
           ];
         };
 
-      # Servers
+      darwinConfigurations.coplandos =
+        let
+          system = "aarch64-darwin";
+        in
+        nix-darwin.lib.darwinSystem {
+          specialArgs = {
+            inherit inputs;
+          };
+          modules = [
+            ./systems/coplandos/configuration.nix
+            inputs.home-manager.darwinModules.home-manager
+            { nixpkgs.hostPlatform = system; }
+          ];
+        };
+
+      ## Servers
       nixosConfigurations.melchior =
         let
           system = "x86_64-linux";

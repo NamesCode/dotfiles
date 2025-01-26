@@ -1,13 +1,16 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }:
+let
+  inherit (pkgs.stdenv.hostPlatform) isDarwin isLinux;
+in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "Name";
-  home.homeDirectory = "/home/${config.home.username}";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -23,37 +26,42 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = with pkgs; [
-    # Install nerd-fonts
-    nerd-fonts.fira-code
-    nerd-fonts.jetbrains-mono
+  home.packages =
+    with pkgs;
+    [
+      # Install nerd-fonts
+      nerd-fonts.fira-code
+      nerd-fonts.jetbrains-mono
 
-    # View system resource usage nicely
-    htop
-    ncdu
+      # View system resource usage nicely
+      htop
+      ncdu
 
-    # Better tools
-    ripgrep
-    fd
-    lsd
+      # Better tools
+      ripgrep
+      fd
+      lsd
 
-    # Yubikey stuff
-    yubikey-manager
+      # Yubikey stuff
+      yubikey-manager
 
-    # Multi-media
-    vlc
-    mplayer
+      # Multi-media
+      mplayer
 
-    # Connect to android devices
-    android-tools
+      # Connect to android devices
+      android-tools
 
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
-  ];
+      # # You can also create simple shell scripts directly inside your
+      # # configuration. For example, this adds a command 'my-hello' to your
+      # # environment:
+      # (pkgs.writeShellScriptBin "my-hello" ''
+      #   echo "Hello, ${config.home.username}!"
+      # '')
+    ]
+    ++ lib.optionals isLinux [
+      # Multi-media
+      vlc
+    ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -80,7 +88,7 @@
     stateHome = "${config.home.homeDirectory}/.xdg/var/lib";
 
     userDirs = {
-      enable = true;
+      enable = isLinux;
       createDirectories = true;
 
       desktop = "${config.home.homeDirectory}";
@@ -106,25 +114,38 @@
   };
 
   # Define variables used across modules
-  vars = {
+  theming = {
     mainFont = "JetBrains Mono";
     # wallpaper = ../../modules/impure/wallpapers/shinji-x-kaworu/beach.jpg;
     wallpaper = ../../modules/impure/wallpapers/garfield_wallpaper.png;
   };
 
+  windowManager = lib.mkIf isDarwin "yabai";
+
   # Imports the modules for different configs.
   imports = [
     # WM setup
+
+    ## Linux
     ./sway.nix
     ./waybar.nix
     ./mako.nix
     ./tofi.nix
 
-    # Shell
-    ./bash.nix
+    ## Darwin
+    # ./yabai.nix
 
     # Terminal
+
+    ## Linux
     ./foot.nix
+
+    ## Darwin
+    #./alacritty.nix
+
+    # Shell
+    ./bash.nix
+    # ./zsh.nix
 
     # Dev toolings
     ../../modules/home-manager/direnv.nix
@@ -178,7 +199,7 @@
   };
 
   # Run the SSH agent on startup
-  services.ssh-agent.enable = true;
+  services.ssh-agent.enable = isLinux;
 
   # Makes my fetch ✨ G A Y ✨
   programs.hyfetch = {
@@ -189,7 +210,7 @@
       light_dark = "dark";
       lightness = 0.6;
       color_align = {
-        mode = "horizontal";
+        mode = if isDarwin then "vertical" else "horizontal";
         custom_colors = [ ];
         fore_back = null;
       };

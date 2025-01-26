@@ -3,13 +3,16 @@
   pkgs,
   ...
 }:
+let
+  inherit (pkgs.stdenv.hostPlatform) isLinux;
+in
 {
   # Configure foot
   programs.foot = {
-    enable = true;
+    enable = isLinux;
     settings = {
       main = {
-        font = "${config.vars.mainFont} NF:size=8";
+        font = "${config.theming.mainFont} NF:size=8";
         dpi-aware = "yes";
       };
 
