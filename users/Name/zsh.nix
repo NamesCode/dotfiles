@@ -1,16 +1,12 @@
 {
   config,
   pkgs,
-  lib,
   ...
 }:
-let
-  inherit (pkgs.stdenv.hostPlatform) isDarwin;
-in
 {
   # Setup zsh
   programs.zsh = {
-    enable = isDarwin;
+    enable = true;
     plugins = [
       # Wayyyyyy better Vi mode + it has Vim extras :00
       {
@@ -27,7 +23,7 @@ in
     autocd = true;
 
     # Config and history related settings
-    dotDir = "${config.xdg.dataHome}/zsh";
+    dotDir = ".xdg/etc/zsh"; # NOTE: dotDir is relative so we *cannot* use xdg.configHome
     history = {
       size = 10000;
       ignoreDups = true;
@@ -38,9 +34,5 @@ in
     # Effect RC's directly
     loginExtra = "echo 'hai haiii haiiiiii~ <3'";
     profileExtra = "eval `ssh-agent` &> /dev/null";
-  };
-
-  home.activation = {
-    makeZshDir = lib.hm.dag.entryAfter [ "writeBoundary" ] "mkdir -p ${config.xdg.dataHome}/zsh";
   };
 }

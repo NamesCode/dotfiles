@@ -44,9 +44,7 @@
   nixpkgs.config.allowUnfree = true;
 
   # Security settings
-  security =
-    {
-    };
+  # security = { };
 
   home-manager = {
     users = {
@@ -98,7 +96,7 @@
         "vlc"
 
         # User
-        (noQuarantine "firefox")
+        "firefox"
         "discord"
 
         # Dev
