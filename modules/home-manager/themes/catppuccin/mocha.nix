@@ -21,7 +21,7 @@
         yellow = "#f1d895";
         blue = "#78acff";
         magenta = "#f7b3e2";
-        cyan = "#70dcc";
+        cyan = "#70dcce";
         white = "#aeb9e4";
       };
     };
