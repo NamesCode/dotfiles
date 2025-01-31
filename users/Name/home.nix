@@ -153,7 +153,7 @@ in
     ./git.nix
 
     # The dotfile lib
-    ../../modules/home-manager/lib.nix
+    ../../modules/home-manager/lib
 
     # Chosen theme
     ../../modules/home-manager/themes/catppuccin/mocha.nix # Dark ctp
