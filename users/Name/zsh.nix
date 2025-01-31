@@ -33,6 +33,13 @@
 
     # Effect RC's directly
     loginExtra = "echo 'hai haiii haiiiiii~ <3'";
-    profileExtra = "eval `ssh-agent` &> /dev/null";
+    profileExtra = ''
+      eval `ssh-agent` &> /dev/null
+      prompt suse
+
+      ZVM_VI_HIGHLIGHT_FOREGROUND=bright_black
+      ZVM_VI_HIGHLIGHT_BACKGROUND=red
+      ZVM_VI_HIGHLIGHT_EXTRASTYLE=bold
+    '';
   };
 }
