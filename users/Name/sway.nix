@@ -11,6 +11,7 @@ let
   keyboard = "kbd_backlight";
 
   isSway = (config.windowManager == "sway");
+  colours = config.theming.colours;
 in
 {
   # Configure Sway
@@ -35,32 +36,32 @@ in
       colors = {
         background = "#ffffff00"; # Makes the window background transparent
         focused = {
-          background = "#1e1e2e";
-          border = "#f38ba8";
-          childBorder = "#f38ba8";
-          indicator = "#f38ba8";
-          text = "#cdd6f4";
+          background = "${colours.base}";
+          border = "${colours.mainAccent}";
+          childBorder = "${colours.mainAccent}";
+          indicator = "${colours.mainAccent}";
+          text = "${colours.text}";
         };
         focusedInactive = {
-          background = "#1e1e2e";
-          border = "#f38ba8";
-          childBorder = "#f38ba8";
-          indicator = "#f38ba8";
-          text = "#cdd6f4";
+          background = "${colours.base}";
+          border = "${colours.mainAccent}";
+          childBorder = "${colours.mainAccent}";
+          indicator = "${colours.mainAccent}";
+          text = "${colours.text}";
         };
         unfocused = {
           background = "#181825";
-          border = "#eba0ac";
-          childBorder = "#eba0ac";
-          indicator = "#eba0ac";
+          border = "${colours.secondaryAccent}";
+          childBorder = "${colours.secondaryAccent}";
+          indicator = "${colours.secondaryAccent}";
           text = "#bac2de";
         };
         urgent = {
-          background = "#1e1e2e";
-          border = "#fab387";
-          childBorder = "#fab387";
-          indicator = "#fab387";
-          text = "#cdd6f4";
+          background = "${colours.base}";
+          border = "${colours.orange}";
+          childBorder = "${colours.orange}";
+          indicator = "${colours.orange}";
+          text = "${colours.text}";
         };
       };
 
@@ -194,34 +195,34 @@ in
   programs.swaylock = {
     enable = isSway;
     settings = {
-      color = "#1e1e2e";
+      color = "${colours.base}";
       image = "${config.theming.wallpaper}";
       scaling = "fill";
       font = "${config.theming.mainFont}";
       font-size = 35;
-      inside-color = "#1e1e2ebb";
-      inside-clear-color = "#1e1e2ebb";
-      inside-caps-lock-color = "#1e1e2ebb";
-      inside-ver-color = "#1e1e2ebb";
-      inside-wrong-color = "#1e1e2ebb";
-      bs-hl-color = "#eba0ac";
-      key-hl-color = "#fab387";
-      layout-bg-color = "#1e1e2e";
-      line-color = "#11111b";
-      line-clear-color = "#11111b";
-      line-caps-lock-color = "#11111b";
-      line-ver-color = "#11111b";
-      line-wrong-color = "#11111b";
-      ring-color = "#1e1e2e";
-      ring-clear-color = "#f9e2af";
-      ring-ver-color = "#89b4fa";
-      ring-wrong-color = "#f38ba8";
-      separator-color = "#313244";
-      text-color = "#cdd6f4";
-      text-clear-color = "#cdd6f4";
-      text-caps-lock-color = "#cdd6f4";
-      text-ver-color = "#cdd6f4";
-      text-wrong-color = "#cdd6f4";
+      inside-color = "${colours.base}bb";
+      inside-clear-color = "${colours.base}bb";
+      inside-caps-lock-color = "${colours.base}bb";
+      inside-ver-color = "${colours.base}bb";
+      inside-wrong-color = "${colours.base}bb";
+      bs-hl-color = "${colours.maroon}";
+      key-hl-color = "${colours.orange}";
+      layout-bg-color = "${colours.base}";
+      line-color = "${colours.crust}";
+      line-clear-color = "${colours.crust}";
+      line-caps-lock-color = "${colours.crust}";
+      line-ver-color = "${colours.crust}";
+      line-wrong-color = "${colours.crust}";
+      ring-color = "${colours.base}";
+      ring-clear-color = "${colours.yellow}";
+      ring-ver-color = "${colours.blue}";
+      ring-wrong-color = "${colours.red}";
+      separator-color = "${colours.surface}";
+      text-color = "${colours.text}";
+      text-clear-color = "${colours.text}";
+      text-caps-lock-color = "${colours.text}";
+      text-ver-color = "${colours.text}";
+      text-wrong-color = "${colours.text}";
       show-failed-attempts = true;
     };
   };

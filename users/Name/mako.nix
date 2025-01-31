@@ -5,16 +5,17 @@
 }:
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux;
+  colour = config.theming.colour;
 in
 {
   # Configure mako
   services.mako = {
     enable = isLinux;
     width = 350;
-    textColor = "#cdd6f4";
-    borderColor = "#f38ba8";
+    textColor = "${colour.text}";
+    borderColor = "${colour.mainAccent}";
     borderSize = 2;
-    backgroundColor = "#1e1e2e";
+    backgroundColor = "${colour.base}";
     progressColor = "#313244";
     layer = "overlay";
     sort = "+priority";

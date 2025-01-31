@@ -5,6 +5,7 @@
 }:
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux;
+  colours = config.theming.colours;
 in
 {
   # Configure tofi
@@ -22,11 +23,11 @@ in
       num-results = 5;
       font = "${config.theming.mainFont}";
 
-      # Catppuccin Mocha
-      text-color = "#7f849c";
-      prompt-color = "#f38ba8";
-      selection-color = "#cdd6f4";
-      background-color = "#1e1e2eDD";
+      # Theme
+      text-color = "${colours.subtext}";
+      prompt-color = "${colours.mainAccent}";
+      selection-color = "${colours.text}";
+      background-color = "${colours.base}DD";
     };
   };
 }

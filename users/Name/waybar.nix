@@ -5,6 +5,7 @@
 }:
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux;
+  colour = config.theming.colour;
 in
 {
   # Setup waybar
@@ -103,7 +104,7 @@ in
         border: none;
         border-radius: 0;
         font-family: "JetBrains Mono", "Fira Code";
-        color: #cdd6f4;
+        color: ${colour.text};
       }
 
       @keyframes blink {
@@ -137,28 +138,28 @@ in
         box-shadow: none;
         text-shadow: none;
         transition: none;
-        border-color: #cdd6f4;
+        border-color: ${colour.text};
       }
       #workspaces button:hover label {
-        color: #cdd6f4;
+        color: ${colour.text};
       }
       #workspaces button.focused {
-        border-color: #f38ba8;
+        border-color: ${colour.mainAccent};
       }
       #workspaces button.focused label {
-        color: #f38ba8;
+        color: ${colour.mainAccent};
       }
       #workspaces button.urgent {
-        border-color: #fab387;
+        border-color: ${colour.orange};
       }
       #workspaces button.urgent label {
-        color: #fab387;
+        color: ${colour.orange};
       }
 
       #mode {
         margin: 2px 3px;
-        background: #fab387;
-        color: #181825;
+        background: ${colour.orange};
+        color: ${colour.mantle};
         border-radius: 4.5px;
         font-weight: bold;
       }
@@ -172,55 +173,55 @@ in
       #cpu, #clock, #wireplumber, #network, #battery {
         background: rgba(24, 24, 37, 0.98);
         padding: 0px 2px;
-        border-bottom: 1px solid #cdd6f4;
+        border-bottom: 1px solid ${colour.text};
       }
 
       #cpu {
-        border-color: #f38ba8;
-        color: #f38ba8;
+        border-color: ${colour.red};
+        color: ${colour.red};
       }
 
       /* #privacy-item {} */
 
       #clock {
-        border-color: #fab387;
-        color: #fab387;
+        border-color: ${colour.orange};
+        color: ${colour.orange};
       }
 
       #wireplumber {
-        border-color: #f9e2af;
-        color: #f9e2af;
+        border-color: ${colour.yellow};
+        color: ${colour.yellow};
       }
 
       #network {
-        border-color: #89dceb;
-        color: #89dceb;
+        border-color: ${colour.sky};
+        color: ${colour.sky};
       }
 
       #battery {
-        border-color: #a6e3a1;
-        color: #a6e3a1;
+        border-color: ${colour.subtext};
+        color: ${colour.subtext};
       }
       #battery.critical {
-        border-color: #f38ba8;
-        color: #f38ba8;
+        border-color: ${colour.red};
+        color: ${colour.red};
         animation: blink 0.5s alternate infinite;
       }
       #battery.low {
-        border-color: #fab387;
-        color: #fab387;
+        border-color: ${colour.orange};
+        color: ${colour.orange};
       }
       #battery.medium {
-        border-color: #f9e2af;
-        color: #f9e2af;
+        border-color: ${colour.yellow};
+        color: ${colour.yellow};
       }
       #battery.full {
-        border-color: #a6e3a1;
-        color: #a6e3a1;
+        border-color: ${colour.green};
+        color: ${colour.green};
       }
       #battery.charging {
-        border-color: #a6e3a1;
-        color: #a6e3a1;
+        border-color: ${colour.green};
+        color: ${colour.green};
         animation: blink 2s alternate infinite;
       }
     '';

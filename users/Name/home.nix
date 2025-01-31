@@ -48,6 +48,9 @@ in
       # Multi-media
       mplayer
 
+      # Chat clients
+      vesktop # Wayy better than discord and cross platform
+
       # Connect to android devices
       android-tools
 
@@ -116,6 +119,10 @@ in
   # Define variables used across modules
   theming = {
     mainFont = "JetBrains Mono";
+    opacity = 0.98;
+
+    # colours = { };
+
     # wallpaper = ../../modules/impure/wallpapers/shinji-x-kaworu/beach.jpg;
     wallpaper = ../../modules/impure/wallpapers/garfield_wallpaper.png;
   };
@@ -136,12 +143,7 @@ in
     # ./yabai.nix
 
     # Terminal
-
-    ## Linux
-    ./foot.nix
-
-    ## Darwin
-    #./alacritty.nix
+    ./alacritty.nix
 
     # Shell
     ./zsh.nix
@@ -152,6 +154,10 @@ in
 
     # The dotfile lib
     ../../modules/home-manager/lib.nix
+
+    # Chosen theme
+    ../../modules/home-manager/themes/catppuccin/mocha.nix # Dark ctp
+    # ../../modules/home-manager/themes/catppuccin/latte.nix # Light ctp
   ];
 
   # Home Manager can also manage your environment variables through
