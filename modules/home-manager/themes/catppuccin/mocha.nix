@@ -1,6 +1,31 @@
 { config, ... }:
 {
   theming.colours = {
+    # Secondary pallette for ANSI
+    ansi = {
+      # Normal colours
+      black = "#585b70";
+      red = "#f38ba8";
+      green = "#a6e3a1";
+      yellow = "#f9e2af";
+      blue = "#89b4fa";
+      magenta = "#f5c2e7";
+      cyan = "#94e2d5";
+      white = "#bac2de";
+
+      bright = {
+        # Bright colours
+        black = "#525679";
+        red = "#f77b9d";
+        green = "#8edd90";
+        yellow = "#f1d895";
+        blue = "#78acff";
+        magenta = "#f7b3e2";
+        cyan = "#70dcc";
+        white = "#aeb9e4";
+      };
+    };
+
     # Special colours.
     mainAccent = config.theming.colours.red;
     secondaryAccent = config.theming.colours.maroon;

@@ -26,11 +26,173 @@
 
             colours = lib.mkOption {
               description = "Colour options that apps will follow.";
-              # TODO: example = { };
+              example = (
+                { config, ... }:
+                {
+                  theming.colours = {
+                    # Secondary pallette for ANSI
+    ansi = {
+      # Normal colours
+      black = "#585b70";
+      red = "#f38ba8";
+      green = "#a6e3a1";
+      yellow = "#f9e2af";
+      blue = "#89b4fa";
+      magenta = "#f5c2e7";
+      cyan = "#94e2d5";
+      white = "#bac2de";
+
+      bright = {
+        # Bright colours
+        black = "#525679";
+        red = "#f77b9d";
+        green = "#8edd90";
+        yellow = "#f1d895";
+        blue = "#78acff";
+        magenta = "#f7b3e2";
+        cyan = "#70dcc";
+        white = "#aeb9e4";
+      };
+    };
+
+                    # Special colours.
+                    mainAccent = config.theming.colours.red;
+                    secondaryAccent = config.theming.colours.maroon;
+
+                    # Shades
+                    text = "#cdd6f4";
+                    subtext = "#a6adc8";
+                    overlay = "#6c7086";
+                    surface = "#313244";
+                    base = "#1e1e2e";
+                    mantle = "#181825";
+                    crust = "#11111b";
+
+                    # 🌈 R A I N B O W 🌈 (gay)
+                    red = "#f38ba8";
+                    maroon = "#eba0ac";
+                    orange = "#fab387";
+                    yellow = "#f9e2af";
+                    green = "#a6e3a1";
+                    teal = "#94e2d5";
+                    sky = "#89dceb";
+                    sapphire = "#74c7ec";
+                    blue = "#89b4fa";
+                    purple = "#cba6f7";
+                    lavender = "#b4befe";
+                    pink = "#f5c2e7";
+                  };
+                }
+              );
               type = lib.types.submodule (
                 { config, ... }:
                 {
                   options = {
+                    # Secondary pallette for ANSI
+                    ansi = lib.mkOption {
+                      description = "Sets the colours for the ANSI pallette.";
+                      type = lib.types.submodule (
+                        { config, ... }:
+                        {
+                          options = {
+                            # Normal colours
+                            black = lib.mkOption {
+                              description = "The black ANSI colour to be used.";
+                              example = "#000000";
+                              type = lib.types.strMatching "[#0-9A-Fa-f]{,9}"; # Ensures it is a valid HexCode
+                            };
+                            red = lib.mkOption {
+                              description = "The red ANSI colour to be used.";
+                              example = "#aa0000";
+                              type = lib.types.strMatching "[#0-9A-Fa-f]{,9}"; # Ensures it is a valid HexCode
+                            };
+                            green = lib.mkOption {
+                              description = "The green ANSI colour to be used.";
+                              example = "#00aa00";
+                              type = lib.types.strMatching "[#0-9A-Fa-f]{,9}"; # Ensures it is a valid HexCode
+                            };
+                            yellow = lib.mkOption {
+                              description = "The yellow ANSI colour to be used.";
+                              example = "#aa5500";
+                              type = lib.types.strMatching "[#0-9A-Fa-f]{,9}"; # Ensures it is a valid HexCode
+                            };
+                            blue = lib.mkOption {
+                              description = "The blue ANSI colour to be used.";
+                              example = "#0000aa";
+                              type = lib.types.strMatching "[#0-9A-Fa-f]{,9}"; # Ensures it is a valid HexCode
+                            };
+                            magenta = lib.mkOption {
+                              description = "The magenta ANSI colour to be used.";
+                              example = "#aa00aa";
+                              type = lib.types.strMatching "[#0-9A-Fa-f]{,9}"; # Ensures it is a valid HexCode
+                            };
+                            cyan = lib.mkOption {
+                              description = "The cyan ANSI colour to be used.";
+                              example = "#00aaaa";
+                              type = lib.types.strMatching "[#0-9A-Fa-f]{,9}"; # Ensures it is a valid HexCode
+                            };
+                            white = lib.mkOption {
+                              description = "The white ANSI colour to be used.";
+                              example = "#aaaaaa";
+                              type = lib.types.strMatching "[#0-9A-Fa-f]{,9}"; # Ensures it is a valid HexCode
+                            };
+
+                            bright = lib.mkOption {
+                              description = "Sets the colours for the bright ANSI pallette.";
+                              type = lib.types.submodule (
+                                { config, ... }:
+                                {
+                                  options = {
+                                    # Bright colours
+                                    black = lib.mkOption {
+                                      description = "The bright black ANSI colour to be used.";
+                                      example = "#555555";
+                                      type = lib.types.strMatching "[#0-9A-Fa-f]{,9}"; # Ensures it is a valid HexCode
+                                    };
+                                    red = lib.mkOption {
+                                      description = "The bright red ANSI colour to be used.";
+                                      example = "#ff5555";
+                                      type = lib.types.strMatching "[#0-9A-Fa-f]{,9}"; # Ensures it is a valid HexCode
+                                    };
+                                    green = lib.mkOption {
+                                      description = "The bright green ANSI colour to be used.";
+                                      example = "#55ff55";
+                                      type = lib.types.strMatching "[#0-9A-Fa-f]{,9}"; # Ensures it is a valid HexCode
+                                    };
+                                    yellow = lib.mkOption {
+                                      description = "The bright yellow ANSI colour to be used.";
+                                      example = "#ffff55";
+                                      type = lib.types.strMatching "[#0-9A-Fa-f]{,9}"; # Ensures it is a valid HexCode
+                                    };
+                                    blue = lib.mkOption {
+                                      description = "The bright blue ANSI colour to be used.";
+                                      example = "#5555ff";
+                                      type = lib.types.strMatching "[#0-9A-Fa-f]{,9}"; # Ensures it is a valid HexCode
+                                    };
+                                    magenta = lib.mkOption {
+                                      description = "The bright magenta ANSI colour to be used.";
+                                      example = "#ff55ff";
+                                      type = lib.types.strMatching "[#0-9A-Fa-f]{,9}"; # Ensures it is a valid HexCode
+                                    };
+                                    cyan = lib.mkOption {
+                                      description = "The bright cyan ANSI colour to be used.";
+                                      example = "#55ffff";
+                                      type = lib.types.strMatching "[#0-9A-Fa-f]{,9}"; # Ensures it is a valid HexCode
+                                    };
+                                    white = lib.mkOption {
+                                      description = "The bright white ANSI colour to be used.";
+                                      example = "#ffffff";
+                                      type = lib.types.strMatching "[#0-9A-Fa-f]{,9}"; # Ensures it is a valid HexCode
+                                    };
+                                  };
+                                }
+                              );
+                            };
+                          };
+                        }
+                      );
+                    };
+
                     # Special colours.
                     mainAccent = lib.mkOption {
                       description = "The primary accent colour. Often we just call a different colour defined here.";
