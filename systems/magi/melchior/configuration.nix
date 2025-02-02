@@ -38,7 +38,7 @@
     user = "root";
 
     zoneId = "beaa649556618108a535c4e9b32473c5";
-    apiKey = "This is left blank intentionally. fill this in l8r also ITS A SECRET";
+    apiKeyFile = "This is left blank intentionally. fill this in l8r also ITS A SECRET";
   };
 
   # Set your time zone.
