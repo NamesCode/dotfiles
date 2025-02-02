@@ -3,12 +3,11 @@
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
 {
-  config,
   lib,
+  config,
   pkgs,
   ...
 }:
-
 {
   imports = [
     # Include the results of the hardware scan.
@@ -33,13 +32,22 @@
     hostId = "efb68931";
   };
 
+  # Automagically update DNS entries with a tool made by moi ✨
+  services.ddnsh = {
+    enable = true;
+    user = "root";
+
+    zoneId = "beaa649556618108a535c4e9b32473c5";
+    apiKey = "This is left blank intentionally. fill this in l8r also ITS A SECRET";
+  };
+
   # Set your time zone.
   time.timeZone = "Europe/London";
 
   users.users = {
     # Name is specified by the default setup
 
-    hpsaucii = {
+    HPsaucii = {
       isNormalUser = true;
       extraGroups = [
         "allowed-ssh"

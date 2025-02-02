@@ -3,12 +3,23 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+
+    # 3rd party
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-darwin.url = "github:LnL7/nix-darwin/master";
-    nvame.url = "github:namescode/nvame";
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # My homebrew rubbish
+    nvame.url = "github:NamesCode/nvame";
+    nurrrr = {
+      url = "github:NamesCode/nurrrr";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -16,6 +27,7 @@
       self,
       nixpkgs,
       nvame,
+      nurrrr,
       nix-darwin,
       ...
     }@inputs:
@@ -86,6 +98,7 @@
             inherit inputs;
           };
           modules = [
+            inputs.nurrrr.nixosModules.default
             ./systems/magi/melchior/configuration.nix
             { nixpkgs.hostPlatform = system; }
           ];
@@ -95,7 +108,8 @@
       asahi-zfs-iso = self.nixosConfigurations.asahi-zfs.config.system.build.isoImage;
       nixosConfigurations.asahi-zfs =
         let
-          system = "aarch64-linux";
+          # WARN: Only change this variable unless you know what you're doing
+          system = "x86_64-linux";
         in
         nixpkgs.lib.nixosSystem {
           specialArgs = {
@@ -106,11 +120,10 @@
           modules = [
             ./installers/asahi-zfs.nix
             ./modules/apple-silicon-support
-            { hardware.asahi.pkgsSystem = system; }
+            { hardware.asahi.pkgsSystem = "aarch64-linux"; }
 
             {
               nixpkgs = {
-                # WARN: Do NOT change the crossSystem
                 crossSystem.system = "aarch64-linux";
                 localSystem.system = system;
                 overlays = [

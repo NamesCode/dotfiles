@@ -1,8 +1,8 @@
 {
-  config,
-  lib,
-  pkgs,
   inputs,
+  lib,
+  config,
+  pkgs,
   ...
 }:
 {
@@ -32,7 +32,7 @@
       ];
 
       openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAy6DQPAN9Qo6k0VpD10kdV+fuHqofVKh/D4U2GFyXF7 Name@navi"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAZHrz913rUEzlnW3o6UjySbOaYYA+3F3oYFHk9xTPNy Name@coplandos"
       ];
     };
 
