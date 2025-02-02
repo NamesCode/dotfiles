@@ -1,7 +1,7 @@
 {
+  inputs,
   config,
   pkgs,
-  inputs,
   ...
 }:
 {
@@ -47,6 +47,7 @@
   # security = { };
 
   home-manager = {
+    useGlobalPkgs = true;
     users = {
       # Set my home-manager config
       "Name" = ../../users/Name/home.nix;
@@ -97,7 +98,7 @@
 
         # User
         "firefox"
-        "discord"
+        # "discord" # Install through Brew because Nixpkgs one is shit
 
         # Dev
         (noQuarantine "alacritty")

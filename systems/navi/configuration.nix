@@ -113,6 +113,7 @@
   };
 
   home-manager = {
+    useGlobalPkgs = true;
     users = {
       # Set my home-manager config
       "Name" = ../../users/Name/home.nix;
