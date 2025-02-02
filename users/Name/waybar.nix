@@ -5,7 +5,7 @@
 }:
 let
   inherit (pkgs.stdenv.hostPlatform) isLinux;
-  colour = config.theming.colour;
+  colours = config.theming.colours;
 in
 {
   # Setup waybar
@@ -104,7 +104,7 @@ in
         border: none;
         border-radius: 0;
         font-family: "JetBrains Mono", "Fira Code";
-        color: ${colour.text};
+        color: ${colours.text};
       }
 
       @keyframes blink {
@@ -138,28 +138,28 @@ in
         box-shadow: none;
         text-shadow: none;
         transition: none;
-        border-color: ${colour.text};
+        border-color: ${colours.text};
       }
       #workspaces button:hover label {
-        color: ${colour.text};
+        color: ${colours.text};
       }
       #workspaces button.focused {
-        border-color: ${colour.mainAccent};
+        border-color: ${colours.mainAccent};
       }
       #workspaces button.focused label {
-        color: ${colour.mainAccent};
+        color: ${colours.mainAccent};
       }
       #workspaces button.urgent {
-        border-color: ${colour.orange};
+        border-color: ${colours.orange};
       }
       #workspaces button.urgent label {
-        color: ${colour.orange};
+        color: ${colours.orange};
       }
 
       #mode {
         margin: 2px 3px;
-        background: ${colour.orange};
-        color: ${colour.mantle};
+        background: ${colours.orange};
+        color: ${colours.mantle};
         border-radius: 4.5px;
         font-weight: bold;
       }
@@ -173,55 +173,55 @@ in
       #cpu, #clock, #wireplumber, #network, #battery {
         background: rgba(24, 24, 37, 0.98);
         padding: 0px 2px;
-        border-bottom: 1px solid ${colour.text};
+        border-bottom: 1px solid ${colours.text};
       }
 
       #cpu {
-        border-color: ${colour.red};
-        color: ${colour.red};
+        border-color: ${colours.red};
+        color: ${colours.red};
       }
 
       /* #privacy-item {} */
 
       #clock {
-        border-color: ${colour.orange};
-        color: ${colour.orange};
+        border-color: ${colours.orange};
+        color: ${colours.orange};
       }
 
       #wireplumber {
-        border-color: ${colour.yellow};
-        color: ${colour.yellow};
+        border-color: ${colours.yellow};
+        color: ${colours.yellow};
       }
 
       #network {
-        border-color: ${colour.sky};
-        color: ${colour.sky};
+        border-color: ${colours.sky};
+        color: ${colours.sky};
       }
 
       #battery {
-        border-color: ${colour.subtext};
-        color: ${colour.subtext};
+        border-color: ${colours.subtext};
+        color: ${colours.subtext};
       }
       #battery.critical {
-        border-color: ${colour.red};
-        color: ${colour.red};
+        border-color: ${colours.red};
+        color: ${colours.red};
         animation: blink 0.5s alternate infinite;
       }
       #battery.low {
-        border-color: ${colour.orange};
-        color: ${colour.orange};
+        border-color: ${colours.orange};
+        color: ${colours.orange};
       }
       #battery.medium {
-        border-color: ${colour.yellow};
-        color: ${colour.yellow};
+        border-color: ${colours.yellow};
+        color: ${colours.yellow};
       }
       #battery.full {
-        border-color: ${colour.green};
-        color: ${colour.green};
+        border-color: ${colours.green};
+        color: ${colours.green};
       }
       #battery.charging {
-        border-color: ${colour.green};
-        color: ${colour.green};
+        border-color: ${colours.green};
+        color: ${colours.green};
         animation: blink 2s alternate infinite;
       }
     '';
