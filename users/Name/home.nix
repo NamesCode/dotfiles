@@ -1,7 +1,8 @@
 {
+  lib,
   config,
   pkgs,
-  lib,
+  nurrrr-pkgs,
   ...
 }:
 let
@@ -41,6 +42,9 @@ in
       ripgrep
       fd
       lsd
+
+      # Password manager
+      # (nurrrr-pkgs.passage)
 
       # Yubikey stuff
       yubikey-manager

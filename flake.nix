@@ -27,7 +27,6 @@
       self,
       nixpkgs,
       nvame,
-      nurrrr,
       nix-darwin,
       ...
     }@inputs:
@@ -61,30 +60,52 @@
       nixosConfigurations.navi =
         let
           system = "aarch64-linux";
+          nurrrr-pkgs = inputs.nurrrr.legacyPackages.${system};
+          nvame = inputs.nvame.packages.${system};
         in
         nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit inputs;
+            inherit nurrrr-pkgs nvame;
           };
           modules = [
             ./systems/navi/configuration.nix
             inputs.home-manager.nixosModules.home-manager
-            { nixpkgs.hostPlatform = system; }
+            {
+              nixpkgs.hostPlatform = system;
+
+              home-manager = {
+                extraSpecialArgs = {
+                  inherit nurrrr-pkgs nvame;
+                };
+                useGlobalPkgs = true;
+              };
+            }
           ];
         };
 
       darwinConfigurations.coplandos =
         let
           system = "aarch64-darwin";
+          nurrrr-pkgs = inputs.nurrrr.legacyPackages.${system};
+          nvame = inputs.nvame.packages.${system};
         in
         nix-darwin.lib.darwinSystem {
           specialArgs = {
-            inherit inputs;
+            inherit nurrrr-pkgs nvame;
           };
           modules = [
             ./systems/coplandos/configuration.nix
             inputs.home-manager.darwinModules.home-manager
-            { nixpkgs.hostPlatform = system; }
+            {
+              nixpkgs.hostPlatform = system;
+
+              home-manager = {
+                extraSpecialArgs = {
+                  inherit nurrrr-pkgs nvame;
+                };
+                useGlobalPkgs = true;
+              };
+            }
           ];
         };
 
@@ -92,10 +113,12 @@
       nixosConfigurations.melchior =
         let
           system = "x86_64-linux";
+          nurrrr-pkgs = inputs.nurrrr.legacyPackages.${system};
+          nvame = inputs.nvame.packages.${system};
         in
         nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit inputs;
+            inherit nurrrr-pkgs nvame;
           };
           modules = [
             inputs.nurrrr.nixosModules.default

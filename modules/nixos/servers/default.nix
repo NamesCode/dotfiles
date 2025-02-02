@@ -1,8 +1,8 @@
 {
-  inputs,
   lib,
   config,
   pkgs,
+  nvame,
   ...
 }:
 {
@@ -28,7 +28,7 @@
       ];
 
       packages = with pkgs; [
-        (inputs.nvame.packages.${system}.default)
+        (nvame.default)
       ];
 
       openssh.authorizedKeys.keys = [

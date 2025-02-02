@@ -1,7 +1,7 @@
 {
-  inputs,
   config,
   pkgs,
+  nvame,
   ...
 }:
 {
@@ -46,14 +46,11 @@
   # Security settings
   # security = { };
 
-  home-manager = {
-    useGlobalPkgs = true;
-    users = {
-      # Set my home-manager config
-      "Name" = ../../users/Name/home.nix;
-      # For future users
-      # "Username" = ../../users/Username/home.nix;
-    };
+  home-manager.users = {
+    # Set my home-manager config
+    "Name" = ../../users/Name/home.nix;
+    # For future users
+    # "Username" = ../../users/Username/home.nix;
   };
 
   # List packages installed in system profile. To search, run:
@@ -62,7 +59,7 @@
     git # Git is essentially a system wide tool nowadays
 
     # My Neovim flake (bracket to avoid 'with pkgs')
-    (inputs.nvame.packages.${system}.mainConfig)
+    (nvame.mainConfig)
   ];
 
   homebrew = {

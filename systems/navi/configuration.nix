@@ -2,9 +2,9 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 {
-  inputs,
   lib,
   pkgs,
+  nvame,
   ...
 }:
 {
@@ -99,6 +99,7 @@
     isNormalUser = true;
     home = "/home/Name";
     shell = pkgs.zsh;
+    ignoreShellProgramCheck = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [ firefox ];
   };
@@ -112,14 +113,11 @@
     sudo.extraConfig = "Defaults rootpw";
   };
 
-  home-manager = {
-    useGlobalPkgs = true;
-    users = {
-      # Set my home-manager config
-      "Name" = ../../users/Name/home.nix;
-      # For future users
-      # "Username" = ../../users/Username/home.nix;
-    };
+  home-manager.users = {
+    # Set my home-manager config
+    "Name" = ../../users/Name/home.nix;
+    # For future users
+    # "Username" = ../../users/Username/home.nix;
   };
 
   # List packages installed in system profile. To search, run:
@@ -136,7 +134,7 @@
     # zfs
 
     # My Neovim flake (bracket to avoid 'with pkgs')
-    (inputs.nvame.packages.${system}.mainConfig)
+    (nvame.mainConfig)
   ];
 
   hardware = {

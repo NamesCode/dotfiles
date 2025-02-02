@@ -16,10 +16,10 @@
 # included in all copies or substantial portions of the Software.
 
 {
-  inputs,
+  lib,
   config,
   pkgs,
-  lib,
+  nvame,
   modulesPath,
   ...
 }:
@@ -103,7 +103,7 @@
     git
 
     # Text editor
-    (inputs.nvame.packages.${system}.mainConfig)
+    (nvame.mainConfig)
   ];
 
   # save space and compilation time. might revise?
