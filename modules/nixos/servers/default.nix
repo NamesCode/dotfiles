@@ -27,8 +27,8 @@
         "allowed-nix"
       ];
 
-      packages = with pkgs; [
-        (nvame.default)
+      packages = [
+        nvame.default
       ];
 
       openssh.authorizedKeys.keys = [

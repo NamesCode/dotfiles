@@ -38,7 +38,7 @@
     user = "root";
 
     zoneId = "beaa649556618108a535c4e9b32473c5";
-    apiKeyFile = "This is left blank intentionally. fill this in l8r also ITS A SECRET";
+    apiKeyFile = "/var/secrets/ddnsh-cf-apikey"; # NOTE: Ensure you make this file as root with `chmod 600`
   };
 
   # Set your time zone.
