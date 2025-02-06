@@ -56,7 +56,7 @@
 
       # System configs
 
-      ## Personal computers
+      # Personal computers
       nixosConfigurations.navi =
         let
           system = "aarch64-linux";
@@ -133,10 +133,11 @@
         let
           # WARN: Only change this variable unless you know what you're doing
           system = "x86_64-linux";
+          nvame = inputs.nvame.packages.${system};
         in
         nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit inputs;
+            inherit nvame;
             modulesPath = inputs.nixpkgs + "/nixos/modules";
           };
 

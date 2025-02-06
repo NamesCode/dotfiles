@@ -18,7 +18,7 @@
 
     # Server modules
     ../../../modules/nixos/servers/git.nix
-    # ../../../modules/nixos/servers/haproxy.nix
+    ../../../modules/nixos/servers/nginx.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
