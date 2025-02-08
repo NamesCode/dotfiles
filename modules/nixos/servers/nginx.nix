@@ -26,14 +26,17 @@ in
         default = true;
 
         locations = {
+          # Custom errors
           "/puppyboy-errors/" = {
-            alias = "/srv/www/puppyboy/errors";
+            alias = "/srv/www/puppyboy/errors/";
             extraConfig = "internal;";
           };
 
+          # Dynamically route the domain
           "/" = {
             index = "index.html";
             tryFiles = "$uri $uri/ /404.html =404";
+
             extraConfig = ''
               limit_req zone=basic burst=10;
               proxy_intercept_errors off;
@@ -57,6 +60,7 @@ in
                 return 410; # Taken care of bwoss... ( • ̀ω•́ )✧
               }
 
+              # Treat as a static site
               root $backend;
             '';
           };
