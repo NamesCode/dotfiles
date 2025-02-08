@@ -25,9 +25,37 @@ in
       # "git.${domain}" = {
       #   locations."/" = {
       #     proxyPass = "http://127.0.0.1:3000";
-      #     extraConfig = "limit_req zone=basic burst=10";
+      #     extraConfig = "limit_req zone=basic burst=10;";
       #   };
       # };
+      "ftp.${domain}" = {
+        root = "/srv/ftp";
+
+        locations."/" = {
+          index = ".index.html";
+          extraConfig = "limit_req zone=basic burst=10;";
+        };
+
+        extraConfig = ''
+          limit_req zone=basic burst=10;
+
+          # Covers the USER/FILE stuff loll
+          location ~ "^\/([^\/]+)(.+)?$" {
+            set $user $1;
+            set $file $2;
+
+            if ($file = "") {
+              set $file ".filelist.html";
+            }
+
+            # Use alias to map to the correct user/public path
+            alias /srv/ftp/$user/public/;
+
+            # Try to serve the file or index.html, else return 404
+            try_files $file $file/.filelist.html =404;
+          }
+        '';
+      };
     };
 
     # TODO:
@@ -38,25 +66,27 @@ in
       limit_req_zone $binary_remote_addr zone=basic:10m rate=5r/s;
 
       # Setup caching
-      proxy_cache_path /tmp/nginx/cache/usersites/ levels=1:2 keys_zone=usersites:50m max_size=500m inactive=30m use_temp_path=off;
+      # proxy_cache_path /tmp/nginx/cache/usersites levels=1:2 keys_zone=usersites:50m max_size=500m inactive=30m use_temp_path=off; # This doesnt work and I cba to figure out why
+      proxy_cache_path /var/cache/nginx/usersites levels=1:2 keys_zone=usersites:50m max_size=500m inactive=30m use_temp_path=off;
 
       # static_site_example /srv/www/usersites/
       # ip_example 127.0.0.1:42069
       map $host $backend {
-          default 410;
+          default not-mine;
           include /etc/nginx/domain_to_webserver.map;
       }
 
       server {
         listen 80 default_server;
-        # listen 443 ssl default_server;
+        # listen 443 default ssl default_server;
         server_name _;
 
+
         # Errors def
-        locations = /puppyboy-errors {
-          root /srv/www/puppyboy/errors/;
+        location = /puppyboy-errors {
+          root /srv/www/puppyboy/errors;
           internal;
-        };
+        }
 
         # 4XX errors
         error_page 400 /puppyboy-errors/400-bad-request.html;
@@ -71,21 +101,46 @@ in
         error_page 500 /puppyboy-errors/500-server-error.html;
         error_page 508 /puppyboy-errors/508-loop.html;
 
+
+        # Handle loops
+        if ($http_max_forwards = "") {
+          set $max_forwards "11";
+        }
+
+        set $max_forwards "$max_forwards-1";
+        
+        if ($max_forwards = 0) {
+          return 508;  # Looping qwq
+        }
+
+        proxy_set_header Max-Forwards "$max_forwards";
+
+
         # Dynamically route the domain
         location / {
-          limit_req zone=basic burst=10
+          limit_req zone=basic burst=10;
+          proxy_intercept_errors off;
 
           # Conditional routing
           if ($backend ~* "127.0.0.1") {
-            proxy_intercept_errors off;
             proxy_pass http://$backend;
             break;
           }
 
-          if ($backend ~* "^[4-5]\d\d$") {
-            return $backend; # Errors be gone!
+          # Error code handling
+          if ($backend = "pay-up") {
+            return 402; # PAY ME!!! >:C
           }
 
+          if ($backend = "not-mine") {
+            return 404; # Not found :<
+          }
+
+          if ($backend = "taken-down") {
+            return 410; # Taken care of bwoss... ( • ̀ω•́ )✧
+          }
+
+          # Treat as a static site
           root $backend;
           index index.html;
           try_files $uri $uri/ /404.html =404;
@@ -96,6 +151,12 @@ in
 
   # Create necessary folders
   systemd.tmpfiles.rules = [
-    "d /tmp/nginx/cache/usersites 0600 nginx nginx -"
+    "f /etc/nginx/domain_to_webserver.map 0600 nginx nginx -"
+  ];
+
+  # Open firewall
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
   ];
 }
