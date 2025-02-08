@@ -22,12 +22,78 @@ in
     recommendedBrotliSettings = true;
 
     virtualHosts = {
-      # "git.${domain}" = {
-      #   locations."/" = {
-      #     proxyPass = "http://127.0.0.1:3000";
-      #     extraConfig = "limit_req zone=basic burst=10;";
-      #   };
-      # };
+      "_" = {
+        default = true;
+
+        locations = {
+          "/puppyboy-errors/" = {
+            alias = "/srv/www/puppyboy/errors";
+            extraConfig = "internal;";
+          };
+
+          "/" = {
+            index = "index.html";
+            tryFiles = "$uri $uri/ /404.html =404";
+            extraConfig = ''
+              limit_req zone=basic burst=10;
+              proxy_intercept_errors off;
+
+              # Conditional routing
+              if ($backend ~* "127.0.0.1") {
+                proxy_pass http://$backend;
+                break;
+              }
+
+              # Error code handling
+              if ($backend = "pay-up") {
+                return 402; # PAY ME!!! >:C
+              }
+
+              if ($backend = "not-mine") {
+                return 404; # Not found :<
+              }
+
+              if ($backend = "taken-down") {
+                return 410; # Taken care of bwoss... ( • ̀ω•́ )✧
+              }
+
+              root $backend;
+            '';
+          };
+        };
+
+        extraConfig = ''
+          limit_req zone=basic burst=10;
+
+          # 4XX errors
+          error_page 400 /puppyboy-errors/400-bad-request.html;
+          error_page 402 /puppyboy-errors/402-payment-required.html;
+          error_page 403 /puppyboy-errors/403-forbiden.html;
+          error_page 404 /puppyboy-errors/404-not-found.html;
+          error_page 408 /puppyboy-errors/408-timeout.html;
+          error_page 410 /puppyboy-errors/410-gone.html;
+          error_page 429 /puppyboy-errors/429-ratelimit.html;
+
+          # 5XX errors
+          error_page 500 /puppyboy-errors/500-server-error.html;
+          error_page 508 /puppyboy-errors/508-loop.html;
+
+
+          # Handle loops
+          if ($http_max_forwards = "") {
+            set $max_forwards "11";
+          }
+
+          set $max_forwards "$max_forwards-1";
+
+          if ($max_forwards = 0) {
+            return 508;  # Looping qwq
+          }
+
+          proxy_set_header Max-Forwards "$max_forwards";
+        '';
+      };
+
       "ftp.${domain}" = {
         root = "/srv/ftp";
 
@@ -59,6 +125,7 @@ in
     };
 
     # TODO:
+    # - [X] Purify config 
     # - [ ] Disable puppyboy related stuff if config.puppyboy-site-or-wtv.enable = false
     # - [ ] Auto ACME for users
     appendHttpConfig = ''
@@ -72,79 +139,8 @@ in
       # static_site_example /srv/www/usersites/
       # ip_example 127.0.0.1:42069
       map $host $backend {
-          default not-mine;
-          include /etc/nginx/domain_to_webserver.map;
-      }
-
-      server {
-        listen 80 default_server;
-        # listen 443 default ssl default_server;
-        server_name _;
-
-
-        # Errors def
-        location = /puppyboy-errors {
-          root /srv/www/puppyboy/errors;
-          internal;
-        }
-
-        # 4XX errors
-        error_page 400 /puppyboy-errors/400-bad-request.html;
-        error_page 402 /puppyboy-errors/402-payment-required.html;
-        error_page 403 /puppyboy-errors/403-forbiden.html;
-        error_page 404 /puppyboy-errors/404-not-found.html;
-        error_page 408 /puppyboy-errors/408-timeout.html;
-        error_page 410 /puppyboy-errors/410-gone.html;
-        error_page 429 /puppyboy-errors/429-ratelimit.html;
-
-        # 5XX errors
-        error_page 500 /puppyboy-errors/500-server-error.html;
-        error_page 508 /puppyboy-errors/508-loop.html;
-
-
-        # Handle loops
-        if ($http_max_forwards = "") {
-          set $max_forwards "11";
-        }
-
-        set $max_forwards "$max_forwards-1";
-        
-        if ($max_forwards = 0) {
-          return 508;  # Looping qwq
-        }
-
-        proxy_set_header Max-Forwards "$max_forwards";
-
-
-        # Dynamically route the domain
-        location / {
-          limit_req zone=basic burst=10;
-          proxy_intercept_errors off;
-
-          # Conditional routing
-          if ($backend ~* "127.0.0.1") {
-            proxy_pass http://$backend;
-            break;
-          }
-
-          # Error code handling
-          if ($backend = "pay-up") {
-            return 402; # PAY ME!!! >:C
-          }
-
-          if ($backend = "not-mine") {
-            return 404; # Not found :<
-          }
-
-          if ($backend = "taken-down") {
-            return 410; # Taken care of bwoss... ( • ̀ω•́ )✧
-          }
-
-          # Treat as a static site
-          root $backend;
-          index index.html;
-          try_files $uri $uri/ /404.html =404;
-        }
+        default not-mine;
+        include /etc/nginx/domain_to_webserver.map;
       }
     '';
   };
