@@ -19,6 +19,7 @@
     # Server modules
     ../../../modules/nixos/servers/git.nix
     ../../../modules/nixos/servers/nginx.nix
+    ../../../modules/nixos/servers/acme.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
