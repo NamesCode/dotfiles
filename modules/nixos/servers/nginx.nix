@@ -29,8 +29,8 @@ in
       "_" = {
         default = true;
         addSSL = true;
-        sslCertificate = "${acmeDir}/certs/$cert_domain.cert";
-        sslCertificateKey = "${acmeDir}/certs/$cert_domain.key";
+        sslCertificate = "${acmeDir}/$cert_domain/cert.pem";
+        sslCertificateKey = "${acmeDir}/$cert_domain/key.pem";
 
         locations = {
           # Custom errors
@@ -208,6 +208,10 @@ in
         chown acme "/var/lib/acme/challenges/$domain/"
         chgrp access-acme "/var/lib/acme/challenges/$domain/"
 
+        mkdir -p "/var/lib/acme/$domain/"
+        chown acme "/var/lib/acme/$domain/"
+        chgrp access-acme "/var/lib/acme/$domain/"
+
         echo "Running acme for domains: $domains, email: $email" >> /var/log/acme-usersites.log
         ${pkgs.sudo}/bin/sudo -u acme ${pkgs.lego}/bin/lego --accept-tos --path /var/lib/acme/.lego --email="$email" --domains="$domains" --http --http.webroot="/var/lib/acme/challenges/$domain/" run || \
         echo "Failed acme for domains: $domains, email: $email" >> /var/log/acme-usersites.log
@@ -215,15 +219,15 @@ in
         # Move certs to ideal dir
         cd /var/lib/acme/.lego/certificates/
 
-        cp $domain.crt "../../certs/$domain.cert" 
-        cp $domain.key "../../certs/$domain.key" 
+        cp $domain.crt "../../$domain/cert.pem" 
+        cp $domain.key "../../$domain/key.pem" 
 
-        chmod 640 "../../certs/$domain.cert"
-        chmod 640 "../../certs/$domain.key"
-        chown acme "../../certs/$domain.cert"
+        chmod 640 "../../$domain/cert.pem"
+        chmod 640 "../../$domain/key.pem"
+        chown acme "../../$domain/cert.pem"
         chown acme "../../certs/$domain.key"
-        chgrp access-acme "../../certs/$domain.cert"
-        chgrp access-acme "../../certs/$domain.key"
+        chgrp access-acme "../../$domain/cert.pem"
+        chgrp access-acme "../../$domain/key.pem"
       done
     '';
     serviceConfig = {
