@@ -6,6 +6,7 @@
 }:
 let
   domain = "puppyboy.cloud";
+  acmeDir = "/var/lib/acme";
 in
 {
   services.nginx = {
@@ -21,15 +22,26 @@ in
     recommendedGzipSettings = true;
     recommendedBrotliSettings = true;
 
+    # Increase bucket size. Idk what it does but it makes shit work soooooo
+    mapHashBucketSize = 128;
+
     virtualHosts = {
       "_" = {
         default = true;
+        addSSL = true;
+        sslCertificate = "${acmeDir}/certs/$cert_domain.cert";
+        sslCertificateKey = "${acmeDir}/certs/$cert_domain.key";
 
         locations = {
           # Custom errors
           "/puppyboy-errors/" = {
             alias = "/srv/www/puppyboy/errors/";
             extraConfig = "internal;";
+          };
+
+          "/.well-known/acme-challenge/" = {
+            alias = "${acmeDir}/challenges/$host/.well-known/acme-challenge/";
+            tryFiles = "$uri =404";
           };
 
           # Dynamically route the domain
@@ -100,6 +112,9 @@ in
 
       "ftp.${domain}" = {
         root = "/srv/ftp";
+        addSSL = true;
+        sslCertificate = "${acmeDir}/certs/puppyboy.cloud.cert";
+        sslCertificateKey = "${acmeDir}/certs/puppyboy.cloud.key";
 
         locations."/" = {
           index = ".index.html";
@@ -140,11 +155,20 @@ in
       # proxy_cache_path /tmp/nginx/cache/usersites levels=1:2 keys_zone=usersites:50m max_size=500m inactive=30m use_temp_path=off; # This doesnt work and I cba to figure out why
       proxy_cache_path /var/cache/nginx/usersites levels=1:2 keys_zone=usersites:50m max_size=500m inactive=30m use_temp_path=off;
 
+
       # static_site_example /srv/www/usersites/
       # ip_example 127.0.0.1:42069
-      map $host $backend {
+      map "$host" $backend {
         default not-mine;
         include /etc/nginx/domain_to_webserver.map;
+      }
+
+      # Remove subdomains and map host to a cert. In future make an exceptions list incase its needed
+      map $ssl_server_name $cert_domain {
+        # default $ssl_server_name;
+        ~^([a-z0-9-_-]+\.)([a-z0-9-_-]+\.[a-z0-9-_-]+)$ $2;
+        ~^([a-z0-9-_-]+\.[a-z0-9-_-]+\.)([a-z0-9-_-]+\.[a-z0-9-_-]+)$ $2;
+        ~^([a-z0-9-_-]+\.[a-z0-9-_-]+\.[a-z0-9-_-]+\.)([a-z0-9-_-]+\.[a-z0-9-_-]+)$ $2;
       }
     '';
   };
@@ -153,6 +177,60 @@ in
   systemd.tmpfiles.rules = [
     "f /etc/nginx/domain_to_webserver.map 0600 nginx nginx -"
   ];
+
+  # Allow cert access
+  users.users.nginx.extraGroups = [ "access-acme" ];
+
+  systemd.timers."acme-usersites" = {
+    wantedBy = [ "timers.target" ];
+    description = "Renew ACME for usersites";
+    timerConfig = {
+      AccuracySec = "28800s";
+      FixedRandomDelay = true;
+      OnCalendar = "daily";
+      Persistent = true;
+      RandomizedDelaySec = "24h";
+      Unit = "acme-usersites.service";
+    };
+  };
+
+  systemd.services."acme-usersites" = {
+    script = ''
+      #!/bin/env sh
+
+      QUERY="SELECT domains, email FROM main;"
+
+      # Loop through each row from the query
+      ${pkgs.sqlite}/bin/sqlite3 /var/lib/puppyboy/database.sqlite3 "$QUERY" | while IFS='|' read -r domains email; do
+        domain=$(echo "$domains" | ${pkgs.gawk}/bin/awk '{print $1}')
+
+        mkdir -p "/var/lib/acme/challenges/$domain/"
+        chown acme "/var/lib/acme/challenges/$domain/"
+        chgrp access-acme "/var/lib/acme/challenges/$domain/"
+
+        echo "Running acme for domains: $domains, email: $email" >> /var/log/acme-usersites.log
+        ${pkgs.sudo}/bin/sudo -u acme ${pkgs.lego}/bin/lego --accept-tos --path /var/lib/acme/.lego --email="$email" --domains="$domains" --http --http.webroot="/var/lib/acme/challenges/$domain/" run || \
+        echo "Failed acme for domains: $domains, email: $email" >> /var/log/acme-usersites.log
+
+        # Move certs to ideal dir
+        cd /var/lib/acme/.lego/certificates/
+
+        cp $domain.crt "../../certs/$domain.cert" 
+        cp $domain.key "../../certs/$domain.key" 
+
+        chmod 640 "../../certs/$domain.cert"
+        chmod 640 "../../certs/$domain.key"
+        chown acme "../../certs/$domain.cert"
+        chown acme "../../certs/$domain.key"
+        chgrp access-acme "../../certs/$domain.cert"
+        chgrp access-acme "../../certs/$domain.key"
+      done
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+    };
+  };
 
   # Open firewall
   networking.firewall.allowedTCPPorts = [
