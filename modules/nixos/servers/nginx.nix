@@ -165,7 +165,7 @@ in
 
       # Remove subdomains and map host to a cert. In future make an exceptions list incase its needed
       map $ssl_server_name $cert_domain {
-        # default $ssl_server_name;
+        default $ssl_server_name;
         ~^([a-z0-9-_-]+\.)([a-z0-9-_-]+\.[a-z0-9-_-]+)$ $2;
         ~^([a-z0-9-_-]+\.[a-z0-9-_-]+\.)([a-z0-9-_-]+\.[a-z0-9-_-]+)$ $2;
         ~^([a-z0-9-_-]+\.[a-z0-9-_-]+\.[a-z0-9-_-]+\.)([a-z0-9-_-]+\.[a-z0-9-_-]+)$ $2;
