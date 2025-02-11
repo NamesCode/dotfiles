@@ -146,7 +146,7 @@ in
     # TODO:
     # - [X] Purify config 
     # - [ ] Disable puppyboy related stuff if config.puppyboy-site-or-wtv.enable = false
-    # - [ ] Auto ACME for users
+    # - [X] Auto ACME for users
     appendHttpConfig = ''
       # Setup ratelimits
       limit_req_zone $binary_remote_addr zone=basic:10m rate=5r/s;
