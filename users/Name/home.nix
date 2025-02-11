@@ -126,7 +126,7 @@ in
     # colours = { };
 
     # wallpaper = ../../modules/impure/wallpapers/shinji-x-kaworu/beach.jpg;
-    wallpaper = ../../modules/impure/wallpapers/garfield_wallpaper.png;
+    wallpaper = ../../modules/impure/wallpapers/ascii-cat.png;
   };
 
   windowManager = lib.mkIf isDarwin "yabai";
