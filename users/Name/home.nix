@@ -113,7 +113,7 @@ in
       # Copies all my scripts to the xdg scripts folder. NOTE: MAKE SURE TO `chmod +x` THE SCRIPT FIRST!!
       "scripts" = {
         recursive = true;
-        source = ../../modules/impure/scripts;
+        source = ../../modules/misc/scripts;
       };
     };
   };
@@ -125,8 +125,8 @@ in
 
     # colours = { };
 
-    # wallpaper = ../../modules/impure/wallpapers/shinji-x-kaworu/beach.jpg;
-    wallpaper = ../../modules/impure/wallpapers/ascii-cat.png;
+    # wallpaper = ../../modules/misc/wallpapers/shinji-x-kaworu/beach.jpg;
+    wallpaper = ../../modules/misc/wallpapers/ascii-cat.png;
   };
 
   windowManager = lib.mkIf isDarwin "yabai";
