@@ -20,7 +20,7 @@
   home.activation.myScript = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     mkdir -p ${config.xdg.configHome}/passage/store
     if [ ! -d "${config.xdg.configHome}/passage/store/.git" ]; then
-      echo -e "\033[43m\033[1;30mINFO:\033[0m OI, make sure you clone your password repo! \`git clone git@git.puppyboy.cloud/Name/passwords ${config.xdg.configHome}/passage/store/\`"
+      echo -e " \033[43m\e[38;5;16m INFO: \033[0m OI, make sure you clone your password repo! \`git clone git@git.puppyboy.cloud/Name/passwords ${config.xdg.configHome}/passage/store/\`"
     fi
   '';
 }

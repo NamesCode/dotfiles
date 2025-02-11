@@ -143,6 +143,7 @@ in
 
     ## Darwin
     # ./yabai.nix
+    ../../modules/home-manager/darwin/wallpaper.nix
 
     # Terminal
     ./alacritty.nix
