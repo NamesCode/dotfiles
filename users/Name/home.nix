@@ -43,11 +43,9 @@ in
       fd
       lsd
 
-      # Password manager
-      # (nurrrr-pkgs.passage)
-
-      # Yubikey stuff
+      # Security stuff
       yubikey-manager
+      age
 
       # Multi-media
       mplayer
@@ -155,6 +153,9 @@ in
     # Dev toolings
     ../../modules/home-manager/direnv.nix
     ./git.nix
+
+    # Password management
+    ./password.nix
 
     # The dotfile lib
     ../../modules/home-manager/lib
