@@ -199,6 +199,10 @@ in
     vim = "nvim";
     ls = "lsd";
 
+    # Never again am I deleting the wrong fucking shit
+    rm = "mkdir -p ~/.trash; mv -t ~/.trash/";
+    empty = "mkdir -p ~/.trash; env rm -rf ~/.trash";
+
     # Quick FS travel
     code = "cd $XDG_CODE_DIR && ls";
     images = "cd $XDG_PICTURES_DIR && ls";
