@@ -117,6 +117,25 @@ in
       };
     };
   };
+  home.activation.macos-xdg-userDirs = lib.hm.dag.entryAfter [ "writeBoundary" ] (
+    lib.optionalString isDarwin ''
+      # Create document dirs
+      mkdir -p "${config.home.homeDirectory}/documents/code";
+      mkdir -p "${config.home.homeDirectory}/documents/templates";
+
+      # Create media dirs
+      mkdir -p "${config.home.homeDirectory}/media/books";
+      mkdir -p "${config.home.homeDirectory}/media/images";
+      mkdir -p "${config.home.homeDirectory}/media/music";
+      mkdir -p "${config.home.homeDirectory}/media/videos";
+
+      # Link hardcoded dirs
+      ln -si "${config.home.homeDirectory}/Pictures" "${config.home.homeDirectory}/media/images"
+      ln -si "${config.home.homeDirectory}/Music" "${config.home.homeDirectory}/media/music"
+      ln -si "${config.home.homeDirectory}/Movies" "${config.home.homeDirectory}/media/videos"
+      sudo ln -si "${config.home.homeDirectory}/Movies" "${config.home.homeDirectory}/media/videos"
+    ''
+  );
 
   # Define variables used across modules
   theming = {
@@ -185,9 +204,23 @@ in
 
   # NOTE: THESE OPTIONS REQUIRE A REBOOT TO TAKE AFFECT
   # Sets environment variables for my user
-  home.sessionVariables = {
-    EDITOR = "nvim";
-  };
+  home.sessionVariables =
+    {
+      EDITOR = "nvim";
+    }
+    # Sets the XDG User dirs on macOS
+    // lib.optionalAttrs isDarwin {
+      XDG_DESKTOP_DIR = "${config.home.homeDirectory}";
+      XDG_DOWNLOAD_DIR = "${config.home.homeDirectory}/downloads";
+      XDG_DOCUMENTS_DIR = "${config.home.homeDirectory}/documents";
+      XDG_TEMPLATES_DIR = "${config.home.homeDirectory}/documents/templates";
+      XDG_MUSIC_DIR = "${config.home.homeDirectory}/media/music";
+      XDG_PICTURES_DIR = "${config.home.homeDirectory}/media/images";
+      XDG_VIDEOS_DIR = "${config.home.homeDirectory}/media/videos";
+      XDG_PUBLICSHARE_DIR = "${config.home.homeDirectory}/public";
+      XDG_CODE_DIR = "${config.home.homeDirectory}/documents/code";
+    };
+
   # Adds directorys to path
   home.sessionPath = [
     "${config.xdg.dataHome}/scripts"

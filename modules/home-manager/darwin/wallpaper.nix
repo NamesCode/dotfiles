@@ -9,7 +9,7 @@ let
   osascript = "/usr/bin/osascript";
 in
 {
-  home.activation.set-wallpaper =
+  home.activation.macos-set-wallpaper =
     assert lib.asserts.assertMsg (!builtins.pathExists osascript)
       "Apple has removed the osascript binary at ${osascript}. Changing wallpapers will not work without change.";
     lib.hm.dag.entryAfter [ "writeBoundary" ] (
