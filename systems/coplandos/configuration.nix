@@ -88,20 +88,24 @@
       [
         # Media
         "blender"
-        "gimp"
-        (noQuarantine "kdenlive")
         "obs"
         "vlc"
 
         # User
         "firefox"
-        # "discord" # Install through Brew because Nixpkgs one is shit
+        "mullvadvpn"
+
+        # Games
+        "osu"
+        "prismlauncher"
 
         # Dev
         (noQuarantine "alacritty")
         "utm"
         "balenaetcher"
         "godot"
+        "renpy"
+        "dbeaver-community"
 
         # System
         "appcleaner"
