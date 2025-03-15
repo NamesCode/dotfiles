@@ -233,7 +233,7 @@ in
     ls = "lsd";
 
     # Never again am I deleting the wrong fucking shit
-    rm = "mkdir -p ~/.trash; mv -t ~/.trash/";
+    rm = "mkdir -p ~/.trash; ${pkgs.coreutils}/bin/mv -t ~/.trash/";
     empty = "mkdir -p ~/.trash; env rm -rf ~/.trash";
 
     # Quick FS travel
