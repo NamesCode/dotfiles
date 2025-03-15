@@ -33,10 +33,17 @@
 
     # Effect RC's directly
     loginExtra = "echo 'hai haiii haiiiiii~ <3'";
-    profileExtra = ''
-      eval `ssh-agent` &> /dev/null
-      prompt suse
+    profileExtra = "eval `ssh-agent` &> /dev/null";
+    initExtra = ''
+      restore() {
+        mkdir -p ~/.trash
+        mv ~/.trash/$1 ./
+      }
 
+      # Removes the autocompletion bell
+      unsetopt LIST_BEEP
+
+      # Sets Vi mode highlighting options
       ZVM_VI_HIGHLIGHT_FOREGROUND=bright_black
       ZVM_VI_HIGHLIGHT_BACKGROUND=red
       ZVM_VI_HIGHLIGHT_EXTRASTYLE=bold

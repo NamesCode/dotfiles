@@ -29,6 +29,11 @@ in
     normal = { family = "${font} NF" }
     size = 12
 
+    [bell]
+    duration = 250
+    color = "${colours.secondaryAccent}"
+    command = { program = "${pkgs.ffmpeg}/bin/ffplay", args = [ "-nodisp", "-autoexit", "${../../modules/misc/bell.flac}", ] }
+
     [terminal]
     osc52 = "CopyPaste"
 
