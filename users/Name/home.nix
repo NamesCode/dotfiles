@@ -42,6 +42,7 @@ in
       ripgrep
       fd
       lsd
+      trash-cli
 
       # Security stuff
       yubikey-manager
@@ -117,7 +118,7 @@ in
       };
     };
   };
-  home.activation.macos-xdg-userDirs = lib.hm.dag.entryAfter [ "writeBoundary" ] (
+  home.activation.macos-dir-setup = lib.hm.dag.entryAfter [ "writeBoundary" ] (
     lib.optionalString isDarwin ''
       # Create document dirs
       mkdir -p "${config.home.homeDirectory}/documents/code";
@@ -129,11 +130,14 @@ in
       mkdir -p "${config.home.homeDirectory}/media/music";
       mkdir -p "${config.home.homeDirectory}/media/videos";
 
+      # Symlink bin to ~/.trash
+      ln -si "${config.xdg.dataHome}/Trash/files" "${config.home.homeDirectory}/.trash"
+
       # Link hardcoded dirs
       ln -si "${config.home.homeDirectory}/Pictures" "${config.home.homeDirectory}/media/images"
       ln -si "${config.home.homeDirectory}/Music" "${config.home.homeDirectory}/media/music"
       ln -si "${config.home.homeDirectory}/Movies" "${config.home.homeDirectory}/media/videos"
-      sudo ln -si "${config.home.homeDirectory}/Movies" "${config.home.homeDirectory}/media/videos"
+      sudo ln -si "${config.home.homeDirectory}/Desktop" "${config.home.homeDirectory}"
     ''
   );
 
@@ -233,8 +237,7 @@ in
     ls = "lsd";
 
     # Never again am I deleting the wrong fucking shit
-    rm = "mkdir -p ~/.trash; ${pkgs.coreutils}/bin/mv -t ~/.trash/";
-    empty = "mkdir -p ~/.trash; env rm -rf ~/.trash/*";
+    rm = "trash-put";
 
     # Quick FS travel
     code = "cd $XDG_CODE_DIR && ls";
