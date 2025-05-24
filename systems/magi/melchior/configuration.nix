@@ -47,6 +47,17 @@
 
   users.users = {
     # Name is specified by the default setup
+    fluffy = {
+      isNormalUser = true;
+      extraGroups = [
+        "allowed-ssh"
+        "allowed-nix"
+      ];
+
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJRTsdSRjwJy2/Z52vgefXKjcvwl0EwTtf1cDaPYyfbN fluffy@psycho"
+      ];
+    };
 
     HPsaucii = {
       isNormalUser = true;

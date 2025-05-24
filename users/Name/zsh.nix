@@ -35,10 +35,8 @@
     loginExtra = "echo 'hai haiii haiiiiii~ <3'";
     profileExtra = "eval `ssh-agent` &> /dev/null";
     initExtra = ''
-      restore() {
-        mkdir -p ~/.trash
-        mv ~/.trash/$1 ./
-      }
+      # Case insensitive completion unless there are two completions that are identical besides case
+      zstyle ':completion:*' matcher-list ''' 'm:{a-zA-Z}={A-Za-z}'
 
       # Removes the autocompletion bell
       unsetopt LIST_BEEP

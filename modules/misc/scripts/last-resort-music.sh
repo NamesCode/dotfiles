@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+# TODO: 
+# - [ ] Convert to shellScriptApplication
+# - [ ] use deemix
+
 MUSIC_DIR=${XDG_MUSIC_DIR:-$(pwd)}
 
 mkdir -p "$MUSIC_DIR"

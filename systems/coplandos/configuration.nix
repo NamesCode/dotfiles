@@ -57,6 +57,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     git # Git is essentially a system wide tool nowadays
+    # sshfs
 
     # My Neovim flake (bracket to avoid 'with pkgs')
     (nvame.mainConfig)
@@ -94,9 +95,11 @@
         # User
         "firefox"
         "mullvadvpn"
+        "qbittorrent"
 
         # Games
         "osu"
+        "whisky"
         "prismlauncher"
 
         # Dev
@@ -110,8 +113,13 @@
         # System
         "appcleaner"
         "aldente"
+        # "macfuse" # BUG: macOS bug causes System Error loop. Search "macfuse system extension error 14.6". You gotta do DFU or smth
+        # "openzfs"
+        # NOTE: I would prefer macfuse but this'll work for now
+        "fuse-t"
+        "fuse-t-sshfs"
       ];
-    # taps = [ ];
+    taps = [ "macos-fuse-t/homebrew-cask" ];
     # extraConfig = '''';
   };
 
@@ -119,14 +127,11 @@
     ## Enables the yabai wm
     #yabai.enable = true;
 
-    ## Enables the yabai wm
-    #sketchybar.enable = true;
-
-    ## Enables the yabai wm
-    #skhd.enable = true;
-
-    ## Enables the yabai wm
+    ## Enables borders for yabai wm
     #jankyborders.enable = true;
+
+    ## Enables the skhd hotkey daemon
+    #skhd.enable = true;
   };
 
   system.stateVersion = 5; # WARN: DO NOT CHANGE APPARENTLY

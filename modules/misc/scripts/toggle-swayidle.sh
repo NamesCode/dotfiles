@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# TODO: Make macOS version
+
 PID=$(pgrep -x swayidle)
 
 if [ -n "$PID" ]; then

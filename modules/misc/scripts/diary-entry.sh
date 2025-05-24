@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+# TODO: 
+# - [ ] Convert to asciidoc
+# - [ ] make posix
+
 # Dir related logic
 YEAR=$(date '+%Y')
 

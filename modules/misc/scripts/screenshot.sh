@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+# TODO: Make macOS version
+
 DATE=$(date '+%Y-%m-%d')
 FILENAME=$(printf "%s\nscreenshot\nclipboard\nquit\n" "$DATE" | tofi)
 IMAGE_DIR=${XDG_PICTURES_DIR:-"$HOME/images"}
