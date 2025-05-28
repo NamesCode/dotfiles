@@ -229,25 +229,31 @@ in
   home.sessionPath = [
     "${config.xdg.dataHome}/scripts"
   ];
+
   # Sets up shell aliases
-  home.shellAliases = {
-    # Since Hyfetch doesn't respect XDG on NixOS for some reason
-    hyfetch = "hyfetch -C ${config.xdg.configHome}/hyfetch.json";
-    vim = "nvim";
-    ls = "lsd";
+  home.shellAliases =
+    {
+      # Since Hyfetch doesn't respect XDG on NixOS for some reason
+      hyfetch = "hyfetch -C ${config.xdg.configHome}/hyfetch.json";
+      vim = "nvim";
+      ls = "lsd";
 
-    # Never again am I deleting the wrong fucking shit
-    rm = "trash-put";
+      # Never again am I deleting the wrong fucking shit
+      rm = "trash-put";
 
-    # Quick FS travel
-    code = "cd $XDG_CODE_DIR && ls";
-    images = "cd $XDG_PICTURES_DIR && ls";
-    videos = "cd $XDG_VIDEOS_DIR && ls";
-    music = "cd $XDG_MUSIC_DIR && ls";
-    books = "cd ~/media/books && ls";
-    diary = "cd $XDG_DOCUMENTS_DIR/diary && ls";
-    dotfiles = "cd $XDG_CODE_DIR/dotfiles && $EDITOR";
-  };
+      # Quick FS travel
+      code = "cd $XDG_CODE_DIR && ls";
+      images = "cd $XDG_PICTURES_DIR && ls";
+      videos = "cd $XDG_VIDEOS_DIR && ls";
+      music = "cd $XDG_MUSIC_DIR && ls";
+      books = "cd ~/media/books && ls";
+      diary = "cd $XDG_DOCUMENTS_DIR/diary && ls";
+      dotfiles = "cd $XDG_CODE_DIR/dotfiles && $EDITOR";
+    }
+    // lib.optionalAttrs isDarwin {
+      # Uses the built in tts cli tool so cant be used on Linux
+      lain-say = "say -v Whisper";
+    };
 
   # Run the SSH agent on startup
   services.ssh-agent.enable = isLinux;

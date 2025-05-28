@@ -43,6 +43,12 @@ in
           domain = "signal";
           command = "--add event=window_focused action=\"borders style=round\" app!=Alacritty";
         }}
+
+        # Funky sfx :3
+        ${yabai {
+          domain = "signal";
+          command = "--add event=space_destroyed action=\"afplay ${../modules/misc/audio/static.flac} &\"";
+        }}
       '';
     };
 
@@ -68,25 +74,25 @@ in
         # Window navigation
 
         ## Jump to certain window
-        ${modifier}-h : ${
+        ${modifier}+ctrl-h : ${
           yabai {
             domain = "window";
             command = "--focus west";
           }
         }
-        ${modifier}-j : ${
+        ${modifier}+ctrl-j : ${
           yabai {
             domain = "window";
             command = "--focus south";
           }
         }
-        ${modifier}-k : ${
+        ${modifier}+ctrl-k : ${
           yabai {
             domain = "window";
             command = "--focus north";
           }
         }
-        ${modifier}-l : ${
+        ${modifier}+ctrl-l : ${
           yabai {
             domain = "window";
             command = "--focus east";
@@ -94,7 +100,7 @@ in
         }
 
         ## Mirror workspace
-        ${modifier}+shift-0x38 : ${
+        ${modifier}+shift-m : ${
           yabai {
             domain = "space";
             command = "--mirror x-axis";
@@ -128,7 +134,7 @@ in
         }
 
         ## Grow window
-        ${modifier}+alt-h : ${
+        ${modifier}+alt+shift-h : ${
           yabai {
             domain = "window";
             command = "--resize right:-5:0";
@@ -141,7 +147,7 @@ in
           }
         } 
 
-        ${modifier}+alt-j : ${
+        ${modifier}+alt+shift-j : ${
           yabai {
             domain = "window";
             command = "--resize top:0:5";
@@ -154,7 +160,7 @@ in
           }
         } 
 
-        ${modifier}+alt-k : ${
+        ${modifier}+alt+shift-k : ${
           yabai {
             domain = "window";
             command = "--resize top:0:-5";
@@ -167,7 +173,7 @@ in
           }
         } 
 
-        ${modifier}+alt-l : ${
+        ${modifier}+alt+shift-l : ${
           yabai {
             domain = "window";
             command = "--resize right:5:0";

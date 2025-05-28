@@ -32,7 +32,7 @@ in
     [bell]
     duration = 250
     color = "${colours.secondaryAccent}"
-    command = { program = "${pkgs.ffmpeg}/bin/ffplay", args = [ "-nodisp", "-autoexit", "${../../modules/misc/bell.flac}", ] }
+    command = { program = "${pkgs.ffmpeg}/bin/ffplay", args = [ "-nodisp", "-autoexit", "${../../modules/misc/audio/bell.flac}", ] }
 
     [terminal]
     osc52 = "CopyPaste"
