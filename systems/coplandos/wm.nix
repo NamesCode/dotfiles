@@ -131,27 +131,55 @@ in
         ${modifier}+alt-h : ${
           yabai {
             domain = "window";
-            command = "--resize left:-10:0";
+            command = "--resize right:-5:0";
           }
-        }
+        } \
+        ${
+          yabai {
+            domain = "window";
+            command = "--resize left:-5:0";
+          }
+        } 
+
         ${modifier}+alt-j : ${
           yabai {
             domain = "window";
-            command = "--resize bottom:0:-10";
+            command = "--resize top:0:5";
           }
-        }
+        } \
+        ${
+          yabai {
+            domain = "window";
+            command = "--resize bottom:0:5";
+          }
+        } 
+
         ${modifier}+alt-k : ${
           yabai {
             domain = "window";
-            command = "--resize top:0:-10";
+            command = "--resize top:0:-5";
           }
-        }
+        } \
+        ${
+          yabai {
+            domain = "window";
+            command = "--resize bottom:0:-5";
+          }
+        } 
+
         ${modifier}+alt-l : ${
           yabai {
             domain = "window";
-            command = "--resize right:-10:0";
+            command = "--resize right:5:0";
           }
-        }
+        } \
+        ${
+          yabai {
+            domain = "window";
+            command = "--resize left:5:0";
+          }
+        } 
+
 
         # Layout
         ${modifier}+shift-space : ${
