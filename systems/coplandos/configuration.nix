@@ -5,6 +5,10 @@
   ...
 }:
 {
+  imports = [
+    ./wm.nix
+  ];
+
   # Set your time zone.
   time.timeZone = "Europe/London";
 
@@ -124,9 +128,6 @@
   };
 
   services = {
-    ## Enables the yabai wm
-    #yabai.enable = true;
-
     ## Enables borders for yabai wm
     #jankyborders.enable = true;
 
