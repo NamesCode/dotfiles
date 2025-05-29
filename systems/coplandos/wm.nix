@@ -47,7 +47,7 @@ in
         # Funky sfx :3
         ${yabai {
           domain = "signal";
-          command = "--add event=space_destroyed action=\"afplay ${../modules/misc/audio/static.flac} &\"";
+          command = "--add event=space_destroyed action=\"afplay ${../../modules/misc/audio/static.flac} &\"";
         }}
       '';
     };
